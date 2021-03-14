@@ -8,4 +8,13 @@
       <PackageReference Include="LShort.Common" Version="1.1.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\LackBot.Common\LackBot.Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controllers" />
+      <Folder Include="Services" />
+    </ItemGroup>
+
 </Project>
