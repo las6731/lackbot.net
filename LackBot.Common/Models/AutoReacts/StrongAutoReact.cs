@@ -6,11 +6,14 @@ namespace LackBot.Common.Models.AutoReacts
     [BsonDiscriminator(AutoReactTypes.Strong)]
     public class StrongAutoReact : AutoReact
     {
-        public StrongAutoReact(string phrase, string emoji): base(phrase, emoji) {}
+        public StrongAutoReact(string phrase, string emoji) : base(phrase, emoji)
+        {
+            Type = AutoReactTypes.Strong;
+        }
         
         public override bool Matches(MessageDetails msg)
         {
-            return Regex.IsMatch(msg.Content, $"\b{Phrase}\b");
+            return Regex.IsMatch(msg.Content, $"\\b{Phrase}\\b");
         }
     }
 }

@@ -15,6 +15,9 @@ namespace LackBot.Common.Models.AutoResponses
         
         [BsonElement("responses")]
         public IList<string> Responses { get; set; }
+        
+        [BsonElement("type")]
+        public string Type { get; set; }
 
         public AutoResponse(string phrase, string response)
         {
@@ -26,6 +29,7 @@ namespace LackBot.Common.Models.AutoResponses
             {
                 response
             };
+            Type = AutoResponseTypes.Naive;
         }
 
         public AutoResponse(string phrase, IList<string> responses)
@@ -35,6 +39,7 @@ namespace LackBot.Common.Models.AutoResponses
             
             Phrase = phrase;
             Responses = responses;
+            Type = AutoResponseTypes.Naive;
         }
 
         public virtual bool Matches(MessageDetails msg)

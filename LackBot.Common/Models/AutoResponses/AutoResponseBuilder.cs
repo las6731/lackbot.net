@@ -8,11 +8,11 @@ namespace LackBot.Common.Models.AutoResponses
         public IList<string> Responses { get; }
         public string Type { get; }
 
-        public AutoResponseBuilder(string phrase, IList<string> responses)
+        public AutoResponseBuilder(string phrase, IList<string> responses, string type = AutoResponseTypes.Naive)
         {
             Phrase = phrase;
             Responses = responses;
-            Type = AutoResponseTypes.Naive;
+            Type = type;
         }
 
         public AutoResponse Build()

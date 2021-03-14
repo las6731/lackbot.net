@@ -13,6 +13,9 @@ namespace LackBot.Common.Models.AutoReacts
         
         [BsonElement("emoji")]
         public string Emoji { get; set; }
+        
+        [BsonElement("type")]
+        public string Type { get; set; }
 
         public AutoReact(string phrase, string emoji)
         {
@@ -21,6 +24,7 @@ namespace LackBot.Common.Models.AutoReacts
             
             Phrase = phrase;
             Emoji = emoji;
+            Type = AutoReactTypes.Naive;
         }
 
         public virtual bool Matches(MessageDetails msg)

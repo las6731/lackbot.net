@@ -7,11 +7,11 @@
         public string Type { get; }
         public ulong Author { get; }
 
-        public AutoReactBuilder(string phrase, string emoji)
+        public AutoReactBuilder(string phrase, string emoji, string type = AutoReactTypes.Naive)
         {
             Phrase = phrase;
             Emoji = emoji;
-            Type = AutoReactTypes.Naive;
+            Type = type;
         }
 
         public AutoReactBuilder(ulong author, string emoji)

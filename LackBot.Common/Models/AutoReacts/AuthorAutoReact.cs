@@ -11,6 +11,7 @@ namespace LackBot.Common.Models.AutoReacts
         public AuthorAutoReact(string phrase, string emoji, ulong author) : base(phrase, emoji)
         {
             Author = author;
+            Type = AutoReactTypes.Author;
         }
         
         public override bool Matches(MessageDetails msg)
