@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LackBot.Discord.Models
+namespace LackBot.Discord.Config
 {
     [Serializable]
     public class ConfigData

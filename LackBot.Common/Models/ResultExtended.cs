@@ -22,7 +22,7 @@ namespace LackBot.Common.Models
             Error = error;
         }
 
-        public bool IsSuccess() => Result.IsSuccess();
+        public bool IsSuccess => Result.IsSuccess();
 
         public static ResultExtended<T> Success(T value) => new ResultExtended<T>(Result.Success, value);
         
