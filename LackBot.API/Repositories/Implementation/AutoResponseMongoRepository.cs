@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Discord.WebSocket;
+using LackBot.Common.Models;
 using LackBot.Common.Models.AutoResponses;
 using LShort.Common.Database.Attributes;
 using LShort.Common.Database.Implementation;
@@ -17,7 +17,18 @@ namespace LackBot.API.Repositories.Implementation
             this.logger = logger.FromSource(GetType());
         }
 
-        public async Task<AutoResponse> FindMatchingResponse(SocketMessage message)
+        protected override void EnsureIndexes()
+        {
+            var indexKeys = Builders<AutoResponse>.IndexKeys.Ascending(response => response.Phrase);
+            var indexOptions = new CreateIndexOptions()
+            {
+                Unique = true
+            };
+            
+            Collection.Indexes.CreateOne(new CreateIndexModel<AutoResponse>(indexKeys, indexOptions));
+        }
+
+        public async Task<AutoResponse> FindMatchingResponse(MessageDetails message)
         {
             var responses = await GetAll();
 

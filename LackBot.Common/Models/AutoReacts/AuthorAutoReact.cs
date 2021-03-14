@@ -1,9 +1,8 @@
-﻿using Discord.WebSocket;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace LackBot.Common.Models.AutoReacts
 {
-    [BsonDiscriminator("Author")]
+    [BsonDiscriminator(AutoReactTypes.Author)]
     public class AuthorAutoReact : AutoReact
     {
         [BsonElement("author")]
@@ -14,9 +13,9 @@ namespace LackBot.Common.Models.AutoReacts
             Author = author;
         }
         
-        public override bool Matches(SocketMessage msg)
+        public override bool Matches(MessageDetails msg)
         {
-            return base.Matches(msg) && msg.Author.Id == Author;
+            return base.Matches(msg) && msg.AuthorId == Author;
         }
     }
 }

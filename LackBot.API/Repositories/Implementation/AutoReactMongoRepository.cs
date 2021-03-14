@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Discord.WebSocket;
+using LackBot.Common.Models;
 using LackBot.Common.Models.AutoReacts;
 using LShort.Common.Database.Attributes;
 using LShort.Common.Database.Implementation;
@@ -18,7 +18,7 @@ namespace LackBot.API.Repositories.Implementation
             this.logger = logger.FromSource(GetType());
         }
 
-        public async Task<IList<AutoReact>> FindMatchingReactions(SocketMessage message)
+        public async Task<IList<AutoReact>> FindMatchingReactions(MessageDetails message)
         {
             var reacts = await GetAll();
 

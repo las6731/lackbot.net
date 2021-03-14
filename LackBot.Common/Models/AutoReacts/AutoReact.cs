@@ -1,12 +1,11 @@
 ﻿using System;
-using Discord.WebSocket;
 using LShort.Common.Models;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace LackBot.Common.Models.AutoReacts
 {
     [BsonKnownTypes(typeof(StrongAutoReact), typeof(AuthorAutoReact))]
-    [BsonDiscriminator("Naive", RootClass = true)]
+    [BsonDiscriminator(AutoReactTypes.Naive, RootClass = true)]
     public class AutoReact : ModelBase
     {
         [BsonElement("phrase")]
@@ -24,9 +23,16 @@ namespace LackBot.Common.Models.AutoReacts
             Emoji = emoji;
         }
 
-        public virtual bool Matches(SocketMessage msg)
+        public virtual bool Matches(MessageDetails msg)
         {
             return msg.Content.Contains(Phrase);
         }
+    }
+
+    public static class AutoReactTypes
+    {
+        public const string Naive = "Naive";
+        public const string Strong = "Strong";
+        public const string Author = "Author";
     }
 }

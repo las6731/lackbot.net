@@ -28,6 +28,8 @@ namespace LackBot.Common.Models
         
         public static ResultExtended<T> NoChange(T value) => new ResultExtended<T>(Result.NoChange, value);
         
+        public static ResultExtended<T> NoChange(string error) => new ResultExtended<T>(Result.NoChange, error);
+        
         public static ResultExtended<T> Failure(string error) => new ResultExtended<T>(Result.Failure, error);
     }
 

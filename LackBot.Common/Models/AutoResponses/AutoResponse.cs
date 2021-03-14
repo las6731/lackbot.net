@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Discord.WebSocket;
 using LShort.Common.Models;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace LackBot.Common.Models.AutoResponses
 {
     [BsonKnownTypes(typeof(StrongAutoResponse))]
-    [BsonDiscriminator("Naive", RootClass = true)]
+    [BsonDiscriminator(AutoResponseTypes.Naive, RootClass = true)]
     public class AutoResponse : ModelBase
     {
         [BsonElement("phrase")]
@@ -38,7 +37,7 @@ namespace LackBot.Common.Models.AutoResponses
             Responses = responses;
         }
 
-        public virtual bool Matches(SocketMessage msg)
+        public virtual bool Matches(MessageDetails msg)
         {
             return msg.Content.Contains(Phrase);
         }
@@ -51,5 +50,11 @@ namespace LackBot.Common.Models.AutoResponses
 
             return Responses[index];
         }
+    }
+
+    public static class AutoResponseTypes
+    {
+        public const string Naive = "Naive";
+        public const string Strong = "Strong";
     }
 }

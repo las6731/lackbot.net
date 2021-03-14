@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using LackBot.API.Repositories;
 using LackBot.API.Repositories.Implementation;
+using LackBot.API.Services;
+using LackBot.API.Services.Implementation;
 using LShort.Common.Database.Implementation;
 using LShort.Common.Logging;
 using LShort.Common.Logging.Implementation;
@@ -53,6 +55,9 @@ namespace LackBot.API
                 new ContainerControlledLifetimeManager());
             container.RegisterType<IAutoReactRepository, AutoReactMongoRepository>(
                 new ContainerControlledLifetimeManager());
+
+            // services
+            container.RegisterType<IAutoResponseService, AutoResponseService>(new ContainerControlledLifetimeManager());
             
             logger.Information("Application initialized successfully.");
         }
