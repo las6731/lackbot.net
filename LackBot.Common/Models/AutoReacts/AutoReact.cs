@@ -17,9 +17,16 @@ namespace LackBot.Common.Models.AutoReacts
         [BsonElement("type")]
         public string Type { get; set; }
 
-        public AutoReact(string phrase, string emoji)
+        public AutoReact()
         {
-            if (phrase == string.Empty) throw new ArgumentException("Phrase must not be empty");
+            Phrase = string.Empty;
+            Emoji = string.Empty;
+            Type = AutoReactTypes.Naive;
+        }
+
+        public AutoReact(string phrase, string emoji, bool allowEmptyPhrase = false)
+        {
+            if (phrase == string.Empty && !allowEmptyPhrase) throw new ArgumentException("Phrase must not be empty");
             if (emoji == string.Empty) throw new ArgumentException("Emoji must not be empty");
             
             Phrase = phrase;

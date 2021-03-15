@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Discord.WebSocket;
 using LackBot.API.Services;
 using LackBot.Common.Models;
 using LackBot.Common.Models.AutoResponses;

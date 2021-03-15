@@ -22,6 +22,8 @@ namespace LackBot.Discord.Config.Implementation
 
                 var result = JsonConvert.DeserializeObject<ConfigData>(jsonString);
 
+                Config = result;
+
                 return ResultExtended<ConfigData>.Success(result);
             }
             catch (Exception e)

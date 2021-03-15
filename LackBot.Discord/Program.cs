@@ -75,8 +75,11 @@ namespace LackBot.Discord
 
         private static ServiceProvider BuildServiceProvider() => new ServiceCollection()
             .AddSingleton<IConfigProvider, ConfigProvider>()
+            .AddSingleton(new HttpClient())
             .AddSingleton<DiscordSocketClient>()
             .AddSingleton<CommandService>()
+            .AddSingleton<IAutoResponseService, AutoResponseService>()
+            .AddSingleton<IAutoReactService, AutoReactService>()
             .AddSingleton<IMessageHandlerService, MessageHandlerService>()
             .BuildServiceProvider();
     }

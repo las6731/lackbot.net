@@ -11,12 +11,16 @@ namespace LackBot.Discord.Services.Implementation
         private readonly IServiceProvider serviceProvider;
         private readonly DiscordSocketClient client;
         private readonly CommandService commandService;
+        private readonly IAutoResponseService autoResponseService;
+        private readonly IAutoReactService autoReactService;
 
-        public MessageHandlerService(IServiceProvider serviceProvider, CommandService commandService, DiscordSocketClient client)
+        public MessageHandlerService(IServiceProvider serviceProvider, CommandService commandService, IAutoResponseService autoResponseService, IAutoReactService autoReactService, DiscordSocketClient client)
         {
             this.serviceProvider = serviceProvider;
             this.client = client;
             this.commandService = commandService;
+            this.autoResponseService = autoResponseService;
+            this.autoReactService = autoReactService;
         }
 
         public async Task InitializeAsync()
@@ -49,6 +53,8 @@ namespace LackBot.Discord.Services.Implementation
             }
             
             // TODO: message was not a command; parse for AutoResponses
+            await autoResponseService.HandleMessageAsync(message);
+            await autoReactService.HandleMessageAsync(message);
         }
     }
 }

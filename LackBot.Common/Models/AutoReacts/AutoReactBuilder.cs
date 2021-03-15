@@ -1,4 +1,6 @@
-﻿namespace LackBot.Common.Models.AutoReacts
+﻿using System.Text.Json.Serialization;
+
+namespace LackBot.Common.Models.AutoReacts
 {
     public class AutoReactBuilder : IBuilder<AutoReact>
     {
@@ -7,10 +9,13 @@
         public string Type { get; }
         public ulong Author { get; }
 
-        public AutoReactBuilder(string phrase, string emoji, string type = AutoReactTypes.Naive)
+        [JsonConstructor]
+        public AutoReactBuilder(string phrase, string emoji, ulong author = 0, string type = AutoReactTypes.Naive)
         {
             Phrase = phrase;
+            Phrase ??= string.Empty;
             Emoji = emoji;
+            Author = author;
             Type = type;
         }
 

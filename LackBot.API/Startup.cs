@@ -58,6 +58,7 @@ namespace LackBot.API
 
             // services
             container.RegisterType<IAutoResponseService, AutoResponseService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IAutoReactService, AutoReactService>(new ContainerControlledLifetimeManager());
             
             logger.Information("Application initialized successfully.");
         }
