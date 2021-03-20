@@ -1,0 +1,29 @@
+version: '3.7'
+services: 
+    lackbot_api:
+        build:
+            context: .
+            dockerfile: Dockerfile_API
+        ports:
+            - '5000:80'
+            - '5001:443'
+        networks:
+            - api
+            - db
+        environment:
+            - DB_CREDENTIALS=db_credentials_docker.json
+    lackbot_discord:
+        build:
+            context: .
+            dockerfile: Dockerfile_Bot
+        networks:
+            - api
+        environment:
+            - BOT_CONFIG=bot_config.json
+networks:
+    api:
+        name: api
+        driver: bridge
+    db:
+        name: db
+        external: true
