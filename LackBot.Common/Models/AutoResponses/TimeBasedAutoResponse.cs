@@ -11,14 +11,6 @@ namespace LackBot.Common.Models.AutoResponses
     {
         [BsonElement("timeSchedule")]
         public string TimeSchedule { get; set; }
-
-        public TimeBasedAutoResponse(string phrase, string response, string timeSchedule) : base(phrase, response)
-        {
-            var cron = CronExpression.Parse(timeSchedule);
-            if (cron.GetNextOccurrence(DateTime.Now) is null) throw new ArgumentException("Invalid cron schedule!");
-
-                TimeSchedule = timeSchedule;
-        }
         
         public TimeBasedAutoResponse(string phrase, IList<string> responses, string timeSchedule) : base(phrase, responses)
         {

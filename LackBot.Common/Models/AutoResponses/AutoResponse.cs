@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using LShort.Common.Models;
 using MongoDB.Bson.Serialization.Attributes;
-using Newtonsoft.Json;
 
 namespace LackBot.Common.Models.AutoResponses
 {
@@ -16,20 +15,7 @@ namespace LackBot.Common.Models.AutoResponses
         
         [BsonElement("responses")]
         public IList<string> Responses { get; set; }
-
-        public AutoResponse(string phrase, string response)
-        {
-            if (phrase == string.Empty) throw new ArgumentException("Phrase must not be empty");
-            if (response == string.Empty) throw new ArgumentException("Response must not be empty");
-            
-            Phrase = phrase;
-            Responses = new List<string>
-            {
-                response
-            };
-        }
         
-        [JsonConstructor]
         public AutoResponse(string phrase, IList<string> responses)
         {
             if (phrase == string.Empty) throw new ArgumentException("Phrase must not be empty");

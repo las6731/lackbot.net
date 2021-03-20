@@ -7,9 +7,8 @@ namespace LackBot.Common.Models.AutoResponses
     [BsonDiscriminator(AutoResponseTypes.Strong)]
     public class StrongAutoResponse : AutoResponse
     {
-        public StrongAutoResponse(string phrase, string response) : base(phrase, response) {}
-
         public StrongAutoResponse(string phrase, IList<string> responses) : base(phrase, responses) {}
+        
         public override bool Matches(MessageDetails msg)
         {
             return Regex.IsMatch(msg.Content.ToLower(), $"\\b{Phrase}\\b");
