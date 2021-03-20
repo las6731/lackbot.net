@@ -12,7 +12,7 @@ namespace LackBot.Common.Models.AutoResponses
         public StrongAutoResponse(string phrase, IList<string> responses) : base(phrase, responses) {}
         public override bool Matches(MessageDetails msg)
         {
-            return Regex.IsMatch(msg.Content, $"\\b{Phrase}\\b");
+            return Regex.IsMatch(msg.Content.ToLower(), $"\\b{Phrase}\\b");
         }
     }
 }

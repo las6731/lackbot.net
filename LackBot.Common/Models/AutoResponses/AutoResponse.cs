@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace LackBot.Common.Models.AutoResponses
 {
-    [BsonKnownTypes(typeof(StrongAutoResponse))]
+    [BsonKnownTypes(typeof(StrongAutoResponse), typeof(TimeBasedAutoResponse), typeof(TimeBasedYesNoAutoResponse))]
     [BsonDiscriminator(AutoResponseTypes.Naive, RootClass = true)]
     public class AutoResponse : ModelBase
     {
@@ -41,10 +41,10 @@ namespace LackBot.Common.Models.AutoResponses
 
         public virtual bool Matches(MessageDetails msg)
         {
-            return msg.Content.Contains(Phrase);
+            return msg.Content.ToLower().Contains(Phrase);
         }
 
-        public virtual string GetResponse()
+        public virtual string GetResponse(MessageDetails msg)
         {
             var random = new Random();
 
@@ -58,5 +58,7 @@ namespace LackBot.Common.Models.AutoResponses
     {
         public const string Naive = "Naive";
         public const string Strong = "Strong";
+        public const string TimeBased = "TimeBased";
+        public const string TimeBasedYesNo = "TimeBasedYesNo";
     }
 }

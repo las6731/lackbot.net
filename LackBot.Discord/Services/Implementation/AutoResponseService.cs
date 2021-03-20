@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using Discord.WebSocket;
+using LackBot.Common.Models;
 using LackBot.Common.Models.AutoResponses;
 using LackBot.Discord.Config;
 using LackBot.Discord.Extensions;
@@ -25,11 +26,18 @@ namespace LackBot.Discord.Services.Implementation
         
         public async Task HandleMessageAsync(SocketUserMessage message)
         {
-            var response = await GetMatchingResponse(message);
+            var msgDetails = new MessageDetails
+            {
+                AuthorId = message.Author.Id,
+                ChannelId = message.Channel.Id,
+                Content = message.Content.ToLower(),
+                Timestamp = message.Timestamp
+            };
+            var response = await GetMatchingResponse(msgDetails);
 
             if (response is null) return;
 
-            var msg = response.GetResponse();
+            var msg = response.GetResponse(msgDetails);
             
             msg = ReplaceEmojis(msg);
 
@@ -53,7 +61,7 @@ namespace LackBot.Discord.Services.Implementation
             return msg;
         }
 
-        private async Task<AutoResponse> GetMatchingResponse(SocketUserMessage message)
+        private async Task<AutoResponse> GetMatchingResponse(MessageDetails message)
         {
             var configResult = await configProvider.Get();
             if (!configResult.IsSuccess) return null;
@@ -61,8 +69,8 @@ namespace LackBot.Discord.Services.Implementation
 
             var queryBuilder = HttpUtility.ParseQueryString(string.Empty);
 
-            queryBuilder["authorId"] = message.Author.Id.ToString();
-            queryBuilder["channelId"] = message.Channel.Id.ToString();
+            queryBuilder["authorId"] = message.AuthorId.ToString();
+            queryBuilder["channelId"] = message.ChannelId.ToString();
             queryBuilder["timestamp"] = message.Timestamp.ToString();
 
             var result = await httpClient.GetAsync($"{config.ApiUrl}/auto-response/{message.Content}?{queryBuilder}");

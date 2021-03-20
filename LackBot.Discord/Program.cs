@@ -63,6 +63,8 @@ namespace LackBot.Discord
             await client.LoginAsync(TokenType.Bot, config.Token);
             await client.StartAsync();
             
+            await client.SetGameAsync("Slackbot but worse");
+            
             // block until the program exits
             await Task.Delay(-1);
         }

@@ -25,7 +25,7 @@ namespace LackBot.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson(options =>
-                options.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto);
+                options.SerializerSettings.TypeNameHandling = TypeNameHandling.Objects);
         }
 
         public void ConfigureContainer(IUnityContainer container)
