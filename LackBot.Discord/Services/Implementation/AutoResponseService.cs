@@ -69,7 +69,8 @@ namespace LackBot.Discord.Services.Implementation
 
             if (!result.IsSuccessStatusCode) return null;
 
-            var response = JsonConvert.DeserializeObject<AutoResponse>(await result.Content.ReadAsStringAsync());
+            var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Auto};
+            var response = JsonConvert.DeserializeObject<AutoResponse>(await result.Content.ReadAsStringAsync(), settings);
 
             return response;
         }

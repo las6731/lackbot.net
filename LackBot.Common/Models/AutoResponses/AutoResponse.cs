@@ -16,9 +16,6 @@ namespace LackBot.Common.Models.AutoResponses
         
         [BsonElement("responses")]
         public IList<string> Responses { get; set; }
-        
-        [BsonElement("type")]
-        public string Type { get; set; }
 
         public AutoResponse(string phrase, string response)
         {
@@ -30,18 +27,16 @@ namespace LackBot.Common.Models.AutoResponses
             {
                 response
             };
-            Type = AutoResponseTypes.Naive;
         }
         
         [JsonConstructor]
-        public AutoResponse(string phrase, IList<string> responses, string type = AutoResponseTypes.Naive)
+        public AutoResponse(string phrase, IList<string> responses)
         {
             if (phrase == string.Empty) throw new ArgumentException("Phrase must not be empty");
             if (responses.Any(r => r == string.Empty)) throw new ArgumentException("No response may be empty");
             
             Phrase = phrase;
             Responses = responses;
-            Type = type;
         }
 
         public virtual bool Matches(MessageDetails msg)

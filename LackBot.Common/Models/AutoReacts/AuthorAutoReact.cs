@@ -8,15 +8,9 @@ namespace LackBot.Common.Models.AutoReacts
         [BsonElement("author")]
         public ulong Author { get; set; }
 
-        public AuthorAutoReact()
-        {
-            Author = 0;
-        }
-
         public AuthorAutoReact(string phrase, string emoji, ulong author) : base(phrase, emoji, true)
         {
             Author = author;
-            Type = AutoReactTypes.Author;
         }
         
         public override bool Matches(MessageDetails msg)

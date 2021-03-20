@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using LackBot.API.Repositories;
 using LackBot.API.Repositories.Implementation;
 using LackBot.API.Services;
@@ -11,9 +8,9 @@ using LShort.Common.Logging;
 using LShort.Common.Logging.Implementation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using Unity;
 using Unity.Lifetime;
 
@@ -27,7 +24,8 @@ namespace LackBot.API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto);
         }
 
         public void ConfigureContainer(IUnityContainer container)
