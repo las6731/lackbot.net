@@ -52,7 +52,7 @@ namespace LackBot.Discord.Services.Implementation
                 return;
             }
             
-            // TODO: message was not a command; parse for AutoResponses
+            // message was not a command; parse for AutoResponses
             await autoResponseService.HandleMessageAsync(message);
             await autoReactService.HandleMessageAsync(message);
         }

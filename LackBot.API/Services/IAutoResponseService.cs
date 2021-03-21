@@ -15,6 +15,8 @@ namespace LackBot.API.Services
 
         public Task<AutoResponse> AddAutoResponse(AutoResponseBuilder responseBuilder);
 
+        public Task<ResultExtended<AutoResponse>> ReplaceAutoResponse(Guid id, AutoResponseBuilder responseBuilder);
+
         public Task<ResultExtended<AutoResponse>> AddResponse(Guid id, string response);
         
         public Task<ResultExtended<AutoResponse>> UpdateResponse(Guid id, int responseIndex, string newResponse);

@@ -14,7 +14,9 @@ namespace LackBot.API.Services
 
         public Task<IList<AutoReact>> GetAllReactions();
 
-        public Task<AutoReact> AddAutoReact(AutoReactBuilder responseBuilder);
+        public Task<AutoReact> AddAutoReact(AutoReactBuilder reactBuilder);
+
+        public Task<ResultExtended<AutoReact>> ReplaceAutoReact(Guid id, AutoReactBuilder reactBuilder);
         
         public Task<ResultExtended<AutoReact>> UpdateReact(Guid id, string newReaction);
 

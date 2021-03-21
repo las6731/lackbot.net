@@ -49,6 +49,35 @@ namespace LackBot.API.Services.Implementation
             return response;
         }
 
+        public async Task<ResultExtended<AutoResponse>> ReplaceAutoResponse(Guid id, AutoResponseBuilder responseBuilder)
+        {
+            var enhancedLogger = logger
+                .WithProperty("responseId", id)
+                .WithProperty("responseType", responseBuilder.Type);
+
+            var existingResponse = await repository.Get(id);
+
+            if (existingResponse is null)
+            {
+                enhancedLogger.Error("Existing response not found when attempting to update.");
+                return ResultExtended<AutoResponse>.Failure("Existing response not found.");
+            }
+            
+            var response = responseBuilder.Build();
+
+            response.Id = id;
+
+            var result = await repository.Update(response);
+
+            if (!result.IsSuccess())
+            {
+                enhancedLogger.Error("Failed to replace response in database.", response);
+                return ResultExtended<AutoResponse>.NoChange("Failed to replace response in database.");
+            }
+
+            return ResultExtended<AutoResponse>.Success(response);
+        }
+
         public async Task<ResultExtended<AutoResponse>> AddResponse(Guid id, string response)
         {
             var enhancedLogger = logger.WithProperty("responseId", id).WithProperty("newResponse", response);

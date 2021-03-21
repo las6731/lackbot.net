@@ -66,6 +66,18 @@ namespace LackBot.API.Controllers
             return result.Value;
         }
 
+        [HttpPost]
+        [Route("{id}")]
+        public async Task<ActionResult<AutoResponse>> ReplaceAutoResponse(Guid id, AutoResponseBuilder responseBuilder)
+        {
+            var result = await service.ReplaceAutoResponse(id, responseBuilder);
+
+            if (!result.IsSuccess)
+                return result.Result == Result.Failure ? NotFound(result.Error) : BadRequest(result.Error);
+
+            return result.Value;
+        }
+
         [HttpPut]
         [Route("{id}/{responseIndex}")]
         public async Task<ActionResult<AutoResponse>> UpdateResponse(Guid id, int responseIndex, [FromBody] string newResponse)

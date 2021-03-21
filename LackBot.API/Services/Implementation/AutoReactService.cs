@@ -49,6 +49,35 @@ namespace LackBot.API.Services.Implementation
             return react;
         }
 
+        public async Task<ResultExtended<AutoReact>> ReplaceAutoReact(Guid id, AutoReactBuilder reactBuilder)
+        {
+            var enhancedLogger = logger
+                .WithProperty("reactId", id)
+                .WithProperty("reactType", reactBuilder.Type);
+
+            var existingResponse = await repository.Get(id);
+
+            if (existingResponse is null)
+            {
+                enhancedLogger.Error("Existing reaction not found when attempting to update.");
+                return ResultExtended<AutoReact>.Failure("Existing reaction not found.");
+            }
+            
+            var react = reactBuilder.Build();
+
+            react.Id = id;
+
+            var result = await repository.Update(react);
+
+            if (!result.IsSuccess())
+            {
+                enhancedLogger.Error("Failed to replace reaction in database.", react);
+                return ResultExtended<AutoReact>.NoChange("Failed to replace reaction in database.");
+            }
+
+            return ResultExtended<AutoReact>.Success(react);
+        }
+
         public async Task<ResultExtended<AutoReact>> UpdateReact(Guid id, string newReaction)
         {
             var enhancedLogger = logger
