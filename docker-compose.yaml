@@ -12,6 +12,7 @@ services:
             - db
         environment:
             - DB_CREDENTIALS=db_credentials_docker.json
+        restart: unless-stopped
     lackbot_discord:
         build:
             context: .
@@ -20,6 +21,12 @@ services:
             - api
         environment:
             - BOT_CONFIG=bot_config.json
+        restart: unless-stopped
+    lackbot_frontend:
+        build: frontend
+        ports:
+            - '4200:80'
+        restart: unless-stopped
 networks:
     api:
         name: api

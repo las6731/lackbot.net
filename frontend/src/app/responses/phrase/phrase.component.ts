@@ -1,51 +1,72 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormArray, FormGroup } from '@angular/forms';
+import { AutoResponse, AutoResponseType } from 'src/app/models/autoresponse.model';
 
 @Component({
-  selector: 'app-phrase',
-  templateUrl: './phrase.component.html',
-  styleUrls: ['./phrase.component.scss']
+    selector: 'app-phrase',
+    templateUrl: './phrase.component.html',
+    styleUrls: ['./phrase.component.scss']
 })
 export class PhraseComponent implements OnInit {
 
-  @Input() phrase: any;
-  @Output() deletePhrase: EventEmitter<string>;
-  @Output() deleteResponse: EventEmitter<{ phrase: string, response: string }>;
-  @Output() addResponse: EventEmitter<{ phrase: string, response: string }>;
+    @Input() autoResponse: AutoResponse;
+    @Output() deletePhrase: EventEmitter<string>;
+    @Output() deleteResponse: EventEmitter<{ id: string, index: number }>;
+    @Output() addResponse: EventEmitter<{ id: string, response: string }>;
+    @Output() replaceResponse: EventEmitter<AutoResponse>;
 
-  phraseForm: FormGroup;
+    phraseForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    this.deletePhrase = new EventEmitter();
-    this.deleteResponse = new EventEmitter();
-    this.addResponse = new EventEmitter();
-  }
+    typeOptions = Object.values(AutoResponseType);
 
-  ngOnInit(): void {
-    if (!(this.phrase.value instanceof Array)) {
-      this.phrase.value = [this.phrase.value];
+    constructor(private fb: FormBuilder) {
+        this.deletePhrase = new EventEmitter();
+        this.deleteResponse = new EventEmitter();
+        this.addResponse = new EventEmitter();
+        this.replaceResponse = new EventEmitter();
     }
-    this.phraseForm = this.fb.group({
-      phrase: this.phrase.key,
-      responses: this.fb.array(this.phrase.value)
-    });
-  }
 
-  addResponseControl(): void {
-    this.responses.push(this.fb.control(''));
-  }
+    ngOnInit(): void {
+        this.phraseForm = this.fb.group({
+            phrase: this.autoResponse.phrase,
+            type: this.autoResponse.type,
+            timeSchedule: this.autoResponse.timeSchedule,
+            responses: this.fb.array(this.autoResponse.responses)
+        });
+    }
 
-  removeResponse(index: number): void {
-    this.deleteResponse.emit({ phrase: this.phrase.key, response: this.phrase.value[index] });
-    this.responses.removeAt(index);
-  }
+    addResponseControl(): void {
+        this.responses.push(this.fb.control(''));
+    }
 
-  get responses(): FormArray {
-    return this.phraseForm.get('responses') as FormArray;
-  }
+    removeResponse(index: number): void {
+        this.deleteResponse.emit({ id: this.autoResponse.id, index: index });
+        this.responses.removeAt(index);
+    }
 
-  isArray(obj: any): boolean {
-    return obj instanceof Array;
-  }
+    submitReplaceResponse(): void {
+        this.autoResponse.type = this.phraseForm.get('type').value;
+        this.autoResponse.timeSchedule = this.phraseForm.get('timeSchedule').value
+        this.replaceResponse.emit(this.autoResponse);
+    }
+
+    get responses(): FormArray {
+        return this.phraseForm.get('responses') as FormArray;
+    }
+
+    get typeChanged(): boolean {
+        let form = this.phraseForm.get('type');
+        return form.dirty && form.value != this.autoResponse.type;
+    }
+
+    get showSchedule(): boolean {
+        let form = this.phraseForm.get('type').value;
+        return form == AutoResponseType.TimeBased || form == AutoResponseType.TimeBasedYesNo;
+    }
+
+    get scheduleChanged(): boolean {
+        let form = this.phraseForm.get('timeSchedule');
+        return this.showSchedule && form.dirty && form.value != this.autoResponse.timeSchedule;
+    }
 
 }

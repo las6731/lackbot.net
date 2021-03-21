@@ -17,13 +17,15 @@
     </div>
     <hr class='w-100 m-3' [ngClass]="{'bg-light': !lightMode}">
     <h2>Existing Phrases</h2>
+    <div class='text-muted mb-2'>Note: Time-based responses use <a href='https://en.wikipedia.org/wiki/Cron'>cron expressions</a> to represent when a response matches. Tools such as <a href='https://crontab.guru/'>Crontab.Guru</a> are useful for understanding how these work.</div>
     <table class='table' [ngClass]="{'table-dark': !lightMode}">
         <thead>
-            <th>Phrase</th>
-            <th>Responses</th>
+            <th style="width: 20%">Phrase</th>
+            <th style="width: 20%">Type</th>
+            <th style="width: 60%">Responses</th>
         </thead>
         <tbody>
-            <app-phrase *ngFor='let phrase of responses | keyvalue' [phrase]='phrase' (deletePhrase)='removePhrase($event)' (deleteResponse)='removeResponse($event)' (addResponse)='addResponse($event)'></app-phrase>
+            <app-phrase *ngFor='let phrase of responses' [autoResponse]='phrase' (deletePhrase)='removePhrase($event)' (deleteResponse)='removeResponse($event)' (addResponse)='addResponse($event)' (replaceResponse)='replaceResponse($event)'></app-phrase>
         </tbody>
     </table>
 </div>

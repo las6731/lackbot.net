@@ -69,9 +69,12 @@ namespace LackBot.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
+
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowAnyOrigin());
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

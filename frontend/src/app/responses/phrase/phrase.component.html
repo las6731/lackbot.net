@@ -4,9 +4,24 @@
             <input class='form-control' formControlName='phrase' readonly>
             <div class='input-group-prepend'>
                 <div class='input-group-text'>
-                    <button type='button' class='close' (click)='deletePhrase.emit(phrase.key)'><span aria-hidden="true">&times;</span></button>
+                    <button type='button' class='close' (click)='deletePhrase.emit(autoResponse.id)'><span aria-hidden="true">&times;</span></button>
                 </div>
             </div>
+        </div>
+    </td>
+    <td>
+        <div class='input-group'>
+            <select class='form-control' formControlName='type'>
+                <option *ngFor='let type of typeOptions' [value]='type'>{{type.toString()}}</option>
+            </select>
+        </div>
+        <div *ngIf='showSchedule'>
+            <div class='input-group'>
+                <input class='form-control' formControlName='timeSchedule'>
+            </div>
+        </div>
+        <div>
+            <button type='button' class='btn btn-success' (click)='submitReplaceResponse()' *ngIf='typeChanged || scheduleChanged'>Submit</button>
         </div>
     </td>
     <td formArrayName='responses'>
@@ -20,7 +35,7 @@
                 </div>
             </div>
             <div>
-                <button type='button' class='btn btn-success mb-1' (click)='addResponse.emit({phrase: phraseForm.value.phrase, response: response.value})' *ngIf='response.dirty && response.valid && response.value != phrase.value[i]'>Submit</button>
+                <button type='button' class='btn btn-success mb-1' (click)='addResponse.emit({id: autoResponse.id, response: response.value})' *ngIf='response.dirty && response.valid && response.value != autoResponse.responses[i]'>Submit</button>
             </div>
         </div>
         <div>
