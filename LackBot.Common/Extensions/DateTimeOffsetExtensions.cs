@@ -13,7 +13,8 @@ namespace LackBot.Common.Extensions
         /// <returns>Truncated DateTime</returns>
         public static DateTimeOffset Truncate(this DateTimeOffset date, long resolution)
         {
-            var dt = new DateTime(date.Ticks - (date.Ticks % resolution), date.Date.Kind);
+            var dateKind = date.Date.Kind == DateTimeKind.Unspecified ? DateTimeKind.Utc : date.Date.Kind;
+            var dt = new DateTime(date.Ticks - (date.Ticks % resolution), dateKind);
             return new DateTimeOffset(dt);
         }
     }
