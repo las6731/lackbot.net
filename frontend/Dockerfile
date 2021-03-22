@@ -13,7 +13,7 @@ FROM nginx:1.19.3-alpine
 
 # copy nginx config
 COPY /src/etc/nginx/conf.d/ng.conf /etc/nginx/conf.d/
-RUN rm /etc/nginc/conf.d/default.conf
+RUN rm /etc/nginx/conf.d/default.conf
 
 # copy angular app
 COPY --from=build-env src/dist/* /usr/share/nginx/html
