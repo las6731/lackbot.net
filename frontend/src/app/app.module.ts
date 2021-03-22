@@ -12,27 +12,35 @@ import { ResponseService } from './services/response/response.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LightModeService } from './services/light-mode/light-mode.service';
 import { PhraseComponent } from './responses/phrase/phrase.component';
+import { DeleteResponseDialogComponent } from './responses/phrase/dialogs/delete-response-dialog/delete-response-dialog.component';
+import { DeletePhraseDialogComponent } from './responses/phrase/dialogs/delete-phrase-dialog/delete-phrase-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ResponsesComponent,
-    PhraseComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatSlideToggleModule,
-    HttpClientModule
-  ],
-  providers: [
-    ResponseService,
-    LightModeService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        ResponsesComponent,
+        PhraseComponent,
+        DeleteResponseDialogComponent,
+        DeletePhraseDialogComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        NgbModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatSlideToggleModule,
+        MatDialogModule,
+        MatButtonModule,
+        HttpClientModule
+    ],
+    providers: [
+        ResponseService,
+        LightModeService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

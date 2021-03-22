@@ -1,6 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormArray, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { AutoResponse, AutoResponseType } from 'src/app/models/autoresponse.model';
+import { LightModeService } from 'src/app/services/light-mode/light-mode.service';
+import { DeletePhraseDialogComponent } from './dialogs/delete-phrase-dialog/delete-phrase-dialog.component';
+import { DeleteResponseDialogComponent } from './dialogs/delete-response-dialog/delete-response-dialog.component';
 
 @Component({
     selector: 'app-phrase',
@@ -16,10 +20,12 @@ export class PhraseComponent implements OnInit {
     @Output() replaceResponse: EventEmitter<AutoResponse>;
 
     phraseForm: FormGroup;
-
+    lightMode: boolean;
     typeOptions = Object.values(AutoResponseType);
 
-    constructor(private fb: FormBuilder) {
+    constructor(public dialog: MatDialog, private lightModeService: LightModeService, private fb: FormBuilder) {
+        this.lightModeService.$lightMode.subscribe(lightMode => this.lightMode = lightMode);
+
         this.deletePhrase = new EventEmitter();
         this.deleteResponse = new EventEmitter();
         this.addResponse = new EventEmitter();
@@ -40,8 +46,37 @@ export class PhraseComponent implements OnInit {
     }
 
     removeResponse(index: number): void {
-        this.deleteResponse.emit({ id: this.autoResponse.id, index: index });
-        this.responses.removeAt(index);
+        const dialogRef = this.dialog.open(DeleteResponseDialogComponent, {
+            data: {
+                phrase: this.autoResponse.phrase,
+                response: this.autoResponse.responses[index],
+                lightMode: this.lightMode
+            },
+            panelClass: this.lightMode ? '' : 'darkMode'
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.deleteResponse.emit({ id: this.autoResponse.id, index: index });
+                this.responses.removeAt(index);
+            }
+        });
+    }
+
+    removePhrase(): void {
+        const dialogRef = this.dialog.open(DeletePhraseDialogComponent, {
+            data: {
+                phrase: this.autoResponse.phrase,
+                lightMode: this.lightMode
+            },
+            panelClass: this.lightMode ? '' : 'darkMode'
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.deletePhrase.emit(this.autoResponse.id);
+            }
+        });
     }
 
     submitReplaceResponse(): void {
