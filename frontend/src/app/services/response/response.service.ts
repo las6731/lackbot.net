@@ -29,7 +29,7 @@ export class ResponseService {
         });
     }
 
-    public addAutoResponse(response: AutoResponse) {
+    public addAutoResponse(response: AutoResponse): void {
         this.httpClient.post(`${environment.API_URL}/auto-response`, response)
             .subscribe(() => this.getResponses());
     }

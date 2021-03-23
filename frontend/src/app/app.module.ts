@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ResponsesComponent } from './responses/responses.component';
 import { ResponseService } from './services/response/response.service';
+import { ReactService } from './services/react/react.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LightModeService } from './services/light-mode/light-mode.service';
 import { PhraseComponent } from './responses/phrase/phrase.component';
@@ -16,6 +17,8 @@ import { DeleteResponseDialogComponent } from './responses/phrase/dialogs/delete
 import { DeletePhraseDialogComponent } from './responses/phrase/dialogs/delete-phrase-dialog/delete-phrase-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { ReactsComponent } from './reacts/reacts.component';
+import { ReactionComponent } from './reacts/reaction/reaction.component';
 
 @NgModule({
     declarations: [
@@ -23,7 +26,9 @@ import { MatButtonModule } from '@angular/material/button';
         ResponsesComponent,
         PhraseComponent,
         DeleteResponseDialogComponent,
-        DeletePhraseDialogComponent
+        DeletePhraseDialogComponent,
+        ReactsComponent,
+        ReactionComponent
     ],
     imports: [
         BrowserModule,
@@ -39,7 +44,8 @@ import { MatButtonModule } from '@angular/material/button';
     ],
     providers: [
         ResponseService,
-        LightModeService
+        LightModeService,
+        ReactService
     ],
     bootstrap: [AppComponent]
 })

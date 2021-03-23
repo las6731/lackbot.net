@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AutoResponse, AutoResponseType } from '../models/autoresponse.model';
+import { AutoResponse } from '../models/autoresponse.model';
 import { LightModeService } from '../services/light-mode/light-mode.service';
 import { ResponseService } from '../services/response/response.service';
 
