@@ -29,11 +29,12 @@
     </div>
     <hr class='w-100 m-3' [ngClass]="{'bg-light': !lightMode}">
     <h2>Existing Reactions</h2>
+    <div class='text-muted mb-2'>Note: Normal, built-in (Unicode) emojis must be entered as the actual emoji itself to work; this can be done on Windows with "Win+.", or add a \ before the emoji in Discord then copy paste. Custom emojis should be their name (what you type to use them).</div>
     <table class='table' [ngClass]="{'table-dark': !lightMode}">
         <thead>
             <th>Phrase</th>
             <th>Type</th>
-            <th>Responses</th>
+            <th>Emoji</th>
         </thead>
         <tbody>
             <app-reaction *ngFor='let react of reacts' [autoReact]='react' (deleteReaction)='removeReact($event)' (updateEmoji)='updateEmoji($event)' (replaceReaction)='replaceReact($event)'></app-reaction>
