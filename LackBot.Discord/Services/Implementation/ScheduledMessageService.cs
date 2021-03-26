@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
+using LackBot.Common.Extensions;
 using LackBot.Common.Models.ScheduledMessage;
 using LackBot.Discord.Config;
 using LackBot.Discord.Extensions;
@@ -47,7 +48,8 @@ namespace LackBot.Discord.Services.Implementation
             };
             timer.Start();
 
-            Console.WriteLine("ScheduledMessageService updated messages successfully.");
+            var time = DateTimeOffset.Now.Truncate(TimeSpan.TicksPerSecond).TimeOfDay;
+            Console.WriteLine($"{time} ScheduledMessageService updated messages successfully.");
         }
 
         private async Task LoadMessages(CancellationToken cancellationToken)
@@ -68,16 +70,8 @@ namespace LackBot.Discord.Services.Implementation
             var newMessages = returnedMessages.Where(m => !messages.Contains(m));
             foreach (var m in newMessages)
             {
-                try
-                {
-                    await m.BeginTimer(SendMessage, cancellationToken);
-                }
-                catch (ArgumentException e)
-                {
-                    Console.WriteLine($"Interval for '{m.TimeSchedule}' is too far in the future to schedule yet.");
-                    continue;
-                }
                 messages.Add(m);
+                await m.BeginTimer(SendMessage, HandleIntervalOutOfRange, cancellationToken);
             }
         }
 
@@ -127,6 +121,21 @@ namespace LackBot.Discord.Services.Implementation
             var channel = client.GetChannel(msg.ChannelId) as IMessageChannel;
 
             await channel.SendMessageAsync(message);
+        }
+
+        private void HandleIntervalOutOfRange(Guid id)
+        {
+            var msg = messages.FirstOrDefault(m => m.Id == id);
+
+            if (msg is null) return;
+
+            var time = DateTimeOffset.Now.Truncate(TimeSpan.TicksPerSecond).TimeOfDay;
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write($"{time} WARN: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"Interval for '{msg.TimeSchedule}' is too far in the future to schedule yet.");
+            messages.Remove(msg);
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)

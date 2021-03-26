@@ -42,14 +42,14 @@ namespace LackBot.Discord.Services.Implementation
                 var result =
                     await commandService.ExecuteAsync(context, argPos, serviceProvider, MultiMatchHandling.Best);
 
-                if (!result.IsSuccess)
-                {
-                    Console.WriteLine($"{result.Error} when attempting to parse command: {result.ErrorReason}");
-                    await context.Channel.SendMessageAsync(
-                        $":sweat_smile: Failed to execute command: {result.ErrorReason}");
-                }
+                
+                if (result.IsSuccess) return;
 
-                return;
+                if (result.Error == CommandError.UnknownCommand) return; // ignore unknown commands, they're probably meant for another bot
+                
+                Console.WriteLine($"{result.Error} when attempting to parse command: {result.ErrorReason}");
+                await context.Channel.SendMessageAsync(
+                    $":sweat_smile: Failed to execute command: {result.ErrorReason}");
             }
             
             // message was not a command; parse for AutoResponses

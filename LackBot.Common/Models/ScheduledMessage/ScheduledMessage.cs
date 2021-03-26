@@ -35,7 +35,7 @@ namespace LackBot.Common.Models.ScheduledMessage
             Messages = messages;
         }
 
-        public async Task BeginTimer(Func<Guid, Task> task, CancellationToken cancellationToken)
+        public async Task BeginTimer(Func<Guid, Task> task, Action<Guid> handleOutOfRange, CancellationToken cancellationToken)
         {
             var cron = CronExpression.Parse(TimeSchedule);
             var next = cron.GetNextOccurrence(DateTimeOffset.Now, TimeZoneInfo.Local);
@@ -43,8 +43,16 @@ namespace LackBot.Common.Models.ScheduledMessage
             if (next.HasValue)
             {
                 var delay = next.Value - DateTimeOffset.Now;
-                if (delay.TotalMilliseconds <= 0)
-                    await BeginTimer(task, cancellationToken);
+                switch (delay.TotalMilliseconds)
+                {
+                    case <= 0:
+                        await BeginTimer(task, handleOutOfRange, cancellationToken);
+                        break;
+                    case > int.MaxValue: // cannot create timer with interval > int.MaxValue
+                        handleOutOfRange(Id);
+                        return;
+                }
+
                 timer = new System.Timers.Timer(delay.TotalMilliseconds);
                 timer.Elapsed += async (_, _) =>
                 {
@@ -55,7 +63,7 @@ namespace LackBot.Common.Models.ScheduledMessage
                         await task.Invoke(Id);
 
                     if (!cancellationToken.IsCancellationRequested)
-                        await BeginTimer(task, cancellationToken);
+                        await BeginTimer(task, handleOutOfRange, cancellationToken);
                 };
                 timer.Start();
             }
