@@ -45,19 +45,26 @@ namespace LackBot.Common.Models.ScheduledMessage
                 var delay = next.Value - DateTimeOffset.Now;
                 if (delay.TotalMilliseconds <= 0)
                     await BeginTimer(task, cancellationToken);
-                timer = new System.Timers.Timer(delay.TotalMilliseconds);
-                timer.Elapsed += async (_, _) =>
+                try
                 {
-                    timer.Dispose();
-                    timer = null;
+                    timer = new System.Timers.Timer(delay.TotalMilliseconds);
+                    timer.Elapsed += async (_, _) =>
+                    {
+                        timer.Dispose();
+                        timer = null;
 
-                    if (!cancellationToken.IsCancellationRequested)
-                        await task.Invoke(Id);
+                        if (!cancellationToken.IsCancellationRequested)
+                            await task.Invoke(Id);
 
-                    if (!cancellationToken.IsCancellationRequested)
-                        await BeginTimer(task, cancellationToken);
-                };
-                timer.Start();
+                        if (!cancellationToken.IsCancellationRequested)
+                            await BeginTimer(task, cancellationToken);
+                    };
+                    timer.Start();
+                }
+                catch (ArgumentException e)
+                {
+                    Console.WriteLine($"Interval for {next} is too far in the future to schedule yet: {delay.TotalMilliseconds}");
+                }
             }
         }
 
