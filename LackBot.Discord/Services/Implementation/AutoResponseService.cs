@@ -73,7 +73,7 @@ namespace LackBot.Discord.Services.Implementation
             queryBuilder["channelId"] = message.ChannelId.ToString();
             queryBuilder["timestamp"] = message.Timestamp.ToString();
 
-            var result = await httpClient.GetAsync($"{config.ApiUrl}/auto-response/{message.Content}?{queryBuilder}");
+            var result = await httpClient.GetAsync($"{config.ApiUrl}/auto-responses/{message.Content}?{queryBuilder}");
 
             if (!result.IsSuccessStatusCode) return null;
 

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -10,6 +12,7 @@ using LackBot.Discord.Config.Implementation;
 using LackBot.Discord.Services;
 using LackBot.Discord.Services.Implementation;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace LackBot.Discord
 {
@@ -64,6 +67,10 @@ namespace LackBot.Discord
             await client.StartAsync();
             
             await client.SetGameAsync("Slackbot but worse");
+
+            var scheduledMessageService = services.GetServices<IHostedService>().OfType<ScheduledMessageService>().First();
+
+            await scheduledMessageService.StartAsync(new CancellationToken());
             
             // block until the program exits
             await Task.Delay(-1);
@@ -83,6 +90,7 @@ namespace LackBot.Discord
             .AddSingleton<IAutoResponseService, AutoResponseService>()
             .AddSingleton<IAutoReactService, AutoReactService>()
             .AddSingleton<IMessageHandlerService, MessageHandlerService>()
+            .AddHostedService<ScheduledMessageService>()
             .BuildServiceProvider();
     }
 }

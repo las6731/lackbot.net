@@ -53,10 +53,12 @@ namespace LackBot.API
                 new ContainerControlledLifetimeManager());
             container.RegisterType<IAutoReactRepository, AutoReactMongoRepository>(
                 new ContainerControlledLifetimeManager());
+            container.RegisterType<IScheduledMessageRepository, ScheduledMessageMongoRepository>();
 
             // services
             container.RegisterType<IAutoResponseService, AutoResponseService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IAutoReactService, AutoReactService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IScheduledMessageService, ScheduledMessageService>();
             
             logger.Information("Application initialized successfully.");
         }

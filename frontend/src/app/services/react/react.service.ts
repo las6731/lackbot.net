@@ -16,7 +16,7 @@ export class ReactService {
     }
 
     public getReacts(): void {
-        this.httpClient.get(`${environment.API_URL}/auto-react`).subscribe((reacts: any[]) => {
+        this.httpClient.get(`${environment.API_URL}/auto-reacts`).subscribe((reacts: any[]) => {
             let results: AutoReact[] = [];
 
             reacts.forEach(react => {
@@ -28,23 +28,23 @@ export class ReactService {
     }
 
     public addAutoReact(react: AutoReact): void {
-        this.httpClient.post(`${environment.API_URL}/auto-react`, react)
+        this.httpClient.post(`${environment.API_URL}/auto-reacts`, react)
             .subscribe(() => this.getReacts());
     }
 
     public updateEmoji(id: string, emoji: string): void {
         const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
-        this.httpClient.put(`${environment.API_URL}/auto-react/${id}`, `"${emoji}"`, { headers: headers })
+        this.httpClient.put(`${environment.API_URL}/auto-reacts/${id}`, `"${emoji}"`, { headers: headers })
             .subscribe(() => this.getReacts());
     }
 
     public replaceReact(react: AutoReact): void {
-        this.httpClient.post(`${environment.API_URL}/auto-react/${react.id}`, react)
+        this.httpClient.post(`${environment.API_URL}/auto-reacts/${react.id}`, react)
             .subscribe(() => this.getReacts());
     }
 
     public deleteReact(id: string): void {
-        this.httpClient.delete(`${environment.API_URL}/auto-react/${id}`)
+        this.httpClient.delete(`${environment.API_URL}/auto-reacts/${id}`)
             .subscribe(() => this.getReacts());
     }
 }

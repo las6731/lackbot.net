@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LackBot.API.Controllers
 {
     [ApiController]
-    [Route("api/v1/auto-response")]
+    [Route("api/v1/auto-responses")]
     public class AutoResponseController : Controller
     {
         private readonly IAutoResponseService service;
@@ -54,7 +54,7 @@ namespace LackBot.API.Controllers
             return result;
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("{id}")]
         public async Task<ActionResult<AutoResponse>> AddResponse(Guid id, [FromBody] string response)
         {
@@ -66,7 +66,7 @@ namespace LackBot.API.Controllers
             return result.Value;
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("{id}")]
         public async Task<ActionResult<AutoResponse>> ReplaceAutoResponse(Guid id, AutoResponseBuilder responseBuilder)
         {
@@ -108,10 +108,7 @@ namespace LackBot.API.Controllers
         {
             var result = await service.RemoveAutoResponse(id);
 
-            if (!result.IsSuccess())
-                return new BadRequestResult();
-
-            return Ok();
+            return result.IsSuccess() ? Ok() : BadRequest();
         }
     }
 }

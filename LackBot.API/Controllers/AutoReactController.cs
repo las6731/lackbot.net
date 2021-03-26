@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LackBot.API.Controllers
 {
     [ApiController]
-    [Route("api/v1/auto-react")]
+    [Route("api/v1/auto-reacts")]
     public class AutoReactController : Controller
     {
         private readonly IAutoReactService service;
@@ -84,10 +84,7 @@ namespace LackBot.API.Controllers
         {
             var result = await service.RemoveAutoReact(id);
 
-            if (!result.IsSuccess())
-                return new BadRequestResult();
-
-            return Ok();
+            return result.IsSuccess() ? Ok() : BadRequest();
         }
     }
 }
