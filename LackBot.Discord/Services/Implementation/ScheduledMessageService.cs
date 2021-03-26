@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 using LackBot.Common.Models.ScheduledMessage;
 using LackBot.Discord.Config;
+using LackBot.Discord.Extensions;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 
@@ -87,6 +89,23 @@ namespace LackBot.Discord.Services.Implementation
             return returnedMessages;
         }
 
+        private string ReplaceEmojis(string msg)
+        {
+            var matches = Regex.Matches(msg, ":(.+?):");
+
+            foreach (Match match in matches)
+            {
+                var emoteName = match.Captures[0].Value.Trim(':');
+                var emote = client.GetEmote(emoteName);
+
+                if (!emote.IsSuccess) continue;
+
+                msg = msg.Replace(match.Value, emote.Value.ToString());
+            }
+
+            return msg;
+        }
+
         private async Task SendMessage(Guid id)
         {
             var msg = messages.FirstOrDefault(m => m.Id == id);
@@ -94,6 +113,8 @@ namespace LackBot.Discord.Services.Implementation
             if (msg is null) return;
 
             var message = msg.GetMessage();
+
+            message = ReplaceEmojis(message);
 
             var channel = client.GetChannel(msg.ChannelId) as IMessageChannel;
 
