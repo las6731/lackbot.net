@@ -68,8 +68,16 @@ namespace LackBot.Discord.Services.Implementation
             var newMessages = returnedMessages.Where(m => !messages.Contains(m));
             foreach (var m in newMessages)
             {
+                try
+                {
+                    await m.BeginTimer(SendMessage, cancellationToken);
+                }
+                catch (ArgumentException e)
+                {
+                    Console.WriteLine($"Interval for '{m.TimeSchedule}' is too far in the future to schedule yet.");
+                    continue;
+                }
                 messages.Add(m);
-                await m.BeginTimer(SendMessage, cancellationToken);
             }
         }
 
