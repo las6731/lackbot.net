@@ -1,0 +1,41 @@
+<div class='d-flex flex-column align-items-center' *ngIf='messages != undefined'>
+    <h2>Add New Message</h2>
+    <div class='d-flex flex-column m-2'>
+        <div class='form-inline' [formGroup]='addMessageForm'>
+            <div class='input-group mr-3'>
+                <label for='addMessage-channel' class='mr-3'>Channel</label>
+                <input class='form-control' id='addMessage-channel' formControlName='channel' required>
+            </div>
+            <div class='input-group mr-3'>
+                <label for='addMessage-timeSchedule' class='mr-3'>Time Schedule</label>
+                <input class='form-control' id='addMessage-timeSchedule' formControlName='timeSchedule' required>
+            </div>
+            <div class='input-group mr-3'>
+                <label for='addMessage-message' class='mr-3'>Message</label>
+                <input class='form-control' id='addMessage-message' formControlName='message' required>
+            </div>
+            <div>
+                <button type='button' class='btn btn-success mb-1' (click)='addScheduledMessage()' [disabled]='!addMessageForm.dirty || !addMessageForm.valid'>Submit</button>
+            </div>
+        </div>
+    </div>
+    <hr class='w-100 m-3' [ngClass]="{'bg-light': !lightMode}">
+    <h2>Existing Messages</h2>
+    <div class='text-muted'>Note: Messages use <a href='https://en.wikipedia.org/wiki/Cron'>cron expressions</a> to represent when a message should be sent. Tools such as <a href='https://crontab.guru/'>Crontab.Guru</a> are useful for understanding how these work.</div>
+    <div class='text-muted mb-2'>Additionally, messages only get updated on the bot once every five minutes, so do not expect any changes to be reflected immediately.</div>
+    <table class='table' [ngClass]="{'table-dark': !lightMode}">
+        <thead>
+            <th style="width: 25%">Channel</th>
+            <th style="width: 15%">Schedule</th>
+            <th style="width: 60%">Messages</th>
+        </thead>
+        <tbody>
+            <app-message *ngFor='let message of messages' [message]='message' (addMessage)='addMessage($event)' (deleteMessage)='removeScheduledMessage($event)' (deleteOption)='removeMessage($event)' (updateMessage)='updateScheduledMessage($event)'></app-message>
+        </tbody>
+    </table>
+</div>
+<div class='d-flex justify-content-center align-items-center' *ngIf='messages == undefined'>
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>

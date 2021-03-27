@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AutoReact, AutoReactType } from '../models/autoreact.model';
 import { LightModeService } from '../services/light-mode/light-mode.service';
 import { ReactService } from '../services/react/react.service';
@@ -25,7 +25,7 @@ export class ReactsComponent {
         this.addReactionForm = fb.group({
             phrase: '',
             type: AutoReactType.Naive,
-            authorId: '',
+            authorId: ['', [Validators.pattern("^[0-9]+$")]],
             emoji: ''
         });
     }

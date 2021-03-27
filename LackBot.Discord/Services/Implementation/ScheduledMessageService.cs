@@ -118,7 +118,7 @@ namespace LackBot.Discord.Services.Implementation
 
             message = ReplaceEmojis(message);
 
-            var channel = client.GetChannel(msg.ChannelId) as IMessageChannel;
+            if (client.GetChannel(msg.ChannelId) is not IMessageChannel channel) return;
 
             await channel.SendMessageAsync(message);
         }

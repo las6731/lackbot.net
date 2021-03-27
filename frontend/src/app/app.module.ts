@@ -10,6 +10,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ResponsesComponent } from './responses/responses.component';
 import { ResponseService } from './services/response/response.service';
 import { ReactService } from './services/react/react.service';
+import { ScheduledMessagesService } from './services/scheduled-messages/scheduled-messages.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LightModeService } from './services/light-mode/light-mode.service';
 import { PhraseComponent } from './responses/phrase/phrase.component';
@@ -19,6 +20,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactsComponent } from './reacts/reacts.component';
 import { ReactionComponent } from './reacts/reaction/reaction.component';
+import { MessagesComponent } from './messages/messages.component';
+import { MessageComponent } from './messages/message/message.component';
+import { DeleteOptionDialogComponent } from './messages/message/dialogs/delete-option-dialog/delete-option-dialog.component';
+import { DeleteMessageDialogComponent } from './messages/message/dialogs/delete-message-dialog/delete-message-dialog.component';
 
 @NgModule({
     declarations: [
@@ -28,7 +33,11 @@ import { ReactionComponent } from './reacts/reaction/reaction.component';
         DeleteResponseDialogComponent,
         DeletePhraseDialogComponent,
         ReactsComponent,
-        ReactionComponent
+        ReactionComponent,
+        MessagesComponent,
+        MessageComponent,
+        DeleteOptionDialogComponent,
+        DeleteMessageDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -45,7 +54,8 @@ import { ReactionComponent } from './reacts/reaction/reaction.component';
     providers: [
         ResponseService,
         LightModeService,
-        ReactService
+        ReactService,
+        ScheduledMessagesService
     ],
     bootstrap: [AppComponent]
 })

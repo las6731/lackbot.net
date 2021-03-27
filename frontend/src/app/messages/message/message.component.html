@@ -1,0 +1,40 @@
+<tr [formGroup]='messageForm'>
+    <td>
+        <div class='input-group'>
+            <input class='form-control' formControlName='channel'>
+            <div class='input-group-prepend'>
+                <div class='input-group-text'>
+                    <button type='button' class='close' (click)='removeMessage()'><span aria-hidden="true">&times;</span></button>
+                </div>
+            </div>
+        </div>
+    </td>
+    <td>
+        <div class='input-group'>
+            <div class='input-group mt-1'>
+                <input class='form-control' formControlName='schedule'>
+            </div>
+        </div>
+        <div>
+            <button type='button' class='btn btn-success' (click)='submitUpdateMessage()' *ngIf='formChanged'>Submit</button>
+        </div>
+    </td>
+    <td formArrayName='messages'>
+        <div *ngFor='let msg of messages.controls; let i = index' class='d-flex flex-column'>
+            <div class='input-group mb-1'>
+                <textarea class='form-control' style="height: 2.5em;" [formControlName]='i' required></textarea>
+                <div class='input-group-prepend'>
+                    <div class='input-group-text'>
+                        <button type='button' class='close' (click)='removeOption(i)'><span aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type='button' class='btn btn-success mb-1' (click)='addMessage.emit({id: message.id, message: msg.value})' *ngIf='msg.dirty && msg.valid && msg.value != message.messages[i]'>Submit</button>
+            </div>
+        </div>
+        <div>
+            <button type='button' class='btn btn-primary' (click)='addMessageControl()'>Add</button>
+        </div>
+    </td>
+</tr>

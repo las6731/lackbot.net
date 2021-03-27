@@ -42,7 +42,6 @@ namespace LackBot.Discord.Services.Implementation
                 var result =
                     await commandService.ExecuteAsync(context, argPos, serviceProvider, MultiMatchHandling.Best);
 
-                
                 if (result.IsSuccess) return;
 
                 if (result.Error == CommandError.UnknownCommand) return; // ignore unknown commands, they're probably meant for another bot

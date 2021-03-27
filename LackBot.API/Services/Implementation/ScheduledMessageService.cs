@@ -147,6 +147,20 @@ namespace LackBot.API.Services.Implementation
             
             existingMessage.Messages.RemoveAt(messageIndex);
 
+            if (existingMessage.Messages.Count == 0)
+            {
+                enhancedLogger.Information("Removed last message. Attempting to delete.");
+                var deleteResult = await RemoveScheduledMessage(existingMessage.Id);
+
+                if (!deleteResult.IsSuccess())
+                {
+                    enhancedLogger.Error("Failed to delete message.");
+                    return ResultExtended<ScheduledMessage>.NoChange("Failed to delete message.");
+                }
+                
+                return ResultExtended<ScheduledMessage>.Success(existingMessage);
+            }
+
             var result = await repository.Update(existingMessage);
 
             if (!result.IsSuccess())

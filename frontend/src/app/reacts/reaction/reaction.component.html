@@ -21,7 +21,7 @@
             </div>
         </div>
         <div>
-            <button type='button' class='btn btn-success' (click)='submitReplaceReaction()' *ngIf='typeChanged || authorChanged'>Submit</button>
+            <button type='button' class='btn btn-success' (click)='submitReplaceReaction()' *ngIf='typeChanged || authorChanged' [disabled]='authorChanged && !reactionForm.get("authorId").valid'>Submit</button>
         </div>
     </td>
     <td>

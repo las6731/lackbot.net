@@ -6,12 +6,24 @@
                 <label for='addPhrase-phrase' class='mr-3'>Phrase</label>
                 <input class='form-control' id='addPhrase-phrase' formControlName='phrase' required>
             </div>
+            <div class='mr-3' style='display: flex; flex-direction: column;'>
+                <div class='input-group'>
+                    <label for='addPhrase-type' class='mr-3'>Type</label>
+                    <select class='form-control' id='addPhrase-type' formControlName='type'>
+                        <option *ngFor='let type of typeOptions' [value]='type'>{{type.toString()}}</option>
+                    </select>
+                </div>
+                <div class='input-group mt-1' *ngIf='showSchedule'>
+                    <label for='addPhrase-timeSchedule' class='mr-3'>Schedule</label>
+                    <input class='form-control' id='addPhrase-timeSchedule' formControlName='timeSchedule' required>
+                </div>
+            </div>
             <div class='input-group mr-3'>
                 <label for='addPhrase-response' class='mr-3'>Response</label>
                 <textarea class='form-control' style='height: 2.5em;' id='addPhrase-response' formControlName='response' required></textarea>
             </div>
             <div>
-                <button type='button' class='btn btn-success mb-1' (click)='addPhrase()' [disabled]='!addPhraseForm.dirty || !addPhraseForm.valid'>Submit</button>
+                <button type='button' class='btn btn-success mb-1' (click)='addPhrase()' [disabled]='!addPhraseForm.dirty || !formValid'>Submit</button>
             </div>
         </div>
     </div>

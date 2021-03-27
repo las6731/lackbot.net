@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AutoReact, AutoReactType } from 'src/app/models/autoreact.model';
 import { DeletePhraseDialogComponent } from 'src/app/responses/phrase/dialogs/delete-phrase-dialog/delete-phrase-dialog.component';
@@ -33,7 +33,7 @@ export class ReactionComponent implements OnInit {
         this.reactionForm = this.fb.group({
             phrase: this.autoReact.phrase,
             type: this.autoReact.type,
-            authorId: this.autoReact.author,
+            authorId: [this.autoReact.author, [Validators.pattern("^[0-9]+$")]],
             emoji: this.autoReact.emoji
         });
     }

@@ -38,7 +38,7 @@ namespace LackBot.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult<ScheduledMessage>> UpdatedScheduledMessage(Guid id, ScheduledMessage message)
+        public async Task<ActionResult<ScheduledMessage>> UpdateScheduledMessage(Guid id, ScheduledMessage message)
         {
             message.Id = id;
 
@@ -64,7 +64,7 @@ namespace LackBot.API.Controllers
         
         [HttpPut]
         [Route("{id}/{messageIndex}")]
-        public async Task<ActionResult<ScheduledMessage>> UpdatedMessage(Guid id, int messageIndex, [FromBody] string newMessage)
+        public async Task<ActionResult<ScheduledMessage>> UpdateMessage(Guid id, int messageIndex, [FromBody] string newMessage)
         {
             var result = await service.UpdateMessage(id, messageIndex, newMessage);
             

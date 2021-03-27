@@ -9,7 +9,7 @@ import { AutoResponse } from '../../models/autoresponse.model';
 })
 export class ResponseService {
 
-    private responses: any;
+    private responses: AutoResponse[];
     $responses: Subject<AutoResponse[]>;
 
     constructor(private httpClient: HttpClient) {
