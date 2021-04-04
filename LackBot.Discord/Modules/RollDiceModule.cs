@@ -8,12 +8,22 @@ using Discord.Commands;
 
 namespace LackBot.Discord.Modules
 {
+    /// <summary>
+    /// A command module that allows users to roll dice.
+    /// </summary>
     [Group("roll")]
     [Alias("dice")]
     public class RollDiceModule : ModuleBase<SocketCommandContext>
     {
+        /// <summary>
+        /// The regex to match dice notation.
+        /// </summary>
         private readonly Regex regex = new Regex("^([0-9]*)d([0-9]+)$");
         
+        /// <summary>
+        /// The command to roll dice.
+        /// </summary>
+        /// <param name="notation">Dice notation describing the dice roll that the user wants.</param>
         [Command]
         public async Task RollDice([Summary("Dice notation, ex: 1d12, 2d6, etc")] string notation)
         {
@@ -28,6 +38,11 @@ namespace LackBot.Discord.Modules
             await ReplyAsync(embed: BuildEmbed(dice, sides, results));
         }
 
+        /// <summary>
+        /// Parses the dice notation into the number of dice and number of sides.
+        /// </summary>
+        /// <param name="notation">The dice notation.</param>
+        /// <returns>A tuple containing the number of dice, and the number of sides on each die.</returns>
         private async Task<Tuple<int, int>> ParseNotation(string notation)
         {
             if (!regex.IsMatch(notation))
@@ -59,6 +74,12 @@ namespace LackBot.Discord.Modules
             return Tuple.Create(dice, sides);
         }
 
+        /// <summary>
+        /// Executes the dice roll.
+        /// </summary>
+        /// <param name="dice">The number of dice to roll.</param>
+        /// <param name="sides">The number of sides that each die has.</param>
+        /// <returns>A list containing the result of each die in the roll.</returns>
         private IList<int> ExecuteRoll(int dice, int sides)
         {
             var random = new Random();
@@ -72,6 +93,13 @@ namespace LackBot.Discord.Modules
             return results;
         }
 
+        /// <summary>
+        /// Builds the embed that will be sent to detail the results of the roll.
+        /// </summary>
+        /// <param name="dice">The number of dice rolled.</param>
+        /// <param name="sides">The number of sides on each die.</param>
+        /// <param name="results">The list of results for each die in the roll.</param>
+        /// <returns></returns>
         private Embed BuildEmbed(int dice, int sides, IList<int> results)
         {
             var sum = results.Sum();

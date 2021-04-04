@@ -44,6 +44,11 @@ namespace LackBot.Discord.Services.Implementation
             await message.Channel.SendMessageAsync(msg);
         }
 
+        /// <summary>
+        /// Replace all custom emotes (such as :pog:) with the actual emote, if found by the bot.
+        /// </summary>
+        /// <param name="msg">The message.</param>
+        /// <returns>The message with all found emotes replaced.</returns>
         private string ReplaceEmojis(string msg)
         {
             var matches = Regex.Matches(msg, ":(.+?):");
@@ -61,6 +66,11 @@ namespace LackBot.Discord.Services.Implementation
             return msg;
         }
 
+        /// <summary>
+        /// Query the API for the first response that matches the message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <returns>The first response that matches the message.</returns>
         private async Task<AutoResponse> GetMatchingResponse(MessageDetails message)
         {
             var configResult = await configProvider.Get();

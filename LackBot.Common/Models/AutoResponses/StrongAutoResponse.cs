@@ -4,6 +4,11 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace LackBot.Common.Models.AutoResponses
 {
+    /// <summary>
+    /// A response that will be sent automatically whenever the message contains a substring surrounded by
+    /// word boundaries - such as whitespace, beginning or end of line, etc.
+    /// </summary>
+    /// <remarks><seealso cref="AutoResponseTypes.Strong"/></remarks>
     [BsonDiscriminator(AutoResponseTypes.Strong)]
     public class StrongAutoResponse : AutoResponse
     {

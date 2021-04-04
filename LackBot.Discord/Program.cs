@@ -82,6 +82,10 @@ namespace LackBot.Discord
             return Task.CompletedTask;
         }
 
+        /// <summary>
+        /// Configures dependency injection.
+        /// </summary>
+        /// <returns>The ServiceProvider for dependency injection.</returns>
         private static ServiceProvider BuildServiceProvider() => new ServiceCollection()
             .AddSingleton<IConfigProvider, ConfigProvider>()
             .AddSingleton(new HttpClient())

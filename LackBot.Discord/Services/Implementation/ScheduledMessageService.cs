@@ -16,6 +16,9 @@ using Newtonsoft.Json;
 
 namespace LackBot.Discord.Services.Implementation
 {
+    /// <summary>
+    /// A service that handles scheduled messages.
+    /// </summary>
     public class ScheduledMessageService : IHostedService, IDisposable
     {
         private readonly DiscordSocketClient client;
@@ -52,6 +55,10 @@ namespace LackBot.Discord.Services.Implementation
             Console.WriteLine($"{time} ScheduledMessageService updated messages successfully.");
         }
 
+        /// <summary>
+        /// Loads scheduled messages from the API, replacing any messages that have been updated or removed.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
         private async Task LoadMessages(CancellationToken cancellationToken)
         {
             var returnedMessages = await GetMessages();
@@ -75,6 +82,10 @@ namespace LackBot.Discord.Services.Implementation
             }
         }
 
+        /// <summary>
+        /// Query the API for all scheduled messages.
+        /// </summary>
+        /// <returns>The list of scheduled messages.</returns>
         private async Task<IList<ScheduledMessage>> GetMessages()
         {
             var configResult = await configProvider.Get();
@@ -91,6 +102,11 @@ namespace LackBot.Discord.Services.Implementation
             return returnedMessages;
         }
 
+        /// <summary>
+        /// Replace all custom emotes (such as :pog:) with the actual emote, if found by the bot.
+        /// </summary>
+        /// <param name="msg">The message.</param>
+        /// <returns>The message with all found emotes replaced.</returns>
         private string ReplaceEmojis(string msg)
         {
             var matches = Regex.Matches(msg, ":(.+?):");
@@ -108,6 +124,11 @@ namespace LackBot.Discord.Services.Implementation
             return msg;
         }
 
+        /// <summary>
+        /// Sends the message defined by the scheduled message with the provided id.
+        /// </summary>
+        /// <remarks>Is invoked by the <see cref="ScheduledMessage"/> when its timer has elapsed.</remarks>
+        /// <param name="id">The id of the scheduled message to be sent.</param>
         private async Task SendMessage(Guid id)
         {
             var msg = messages.FirstOrDefault(m => m.Id == id);
@@ -123,6 +144,13 @@ namespace LackBot.Discord.Services.Implementation
             await channel.SendMessageAsync(message);
         }
 
+        /// <summary>
+        /// Handles when the next occurence of a scheduled message is too far away to be scheduled by a timer.
+        /// </summary>
+        /// <remarks>Is invoked by the <see cref="ScheduledMessage"/> when it determines the timer interval
+        /// is out of range. The maximum value of a timer interval is int.MaxValue: 2147483647 milliseconds,
+        /// or 24 days, 20 hours, 31 minutes, and 23.647 seconds.</remarks>
+        /// <param name="id">The id of the scheduled message to be sent.</param>
         private void HandleIntervalOutOfRange(Guid id)
         {
             var msg = messages.FirstOrDefault(m => m.Id == id);
@@ -138,6 +166,10 @@ namespace LackBot.Discord.Services.Implementation
             messages.Remove(msg);
         }
 
+        /// <summary>
+        /// Stops all timers for all scheduled messages.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             timer?.Stop();
@@ -150,6 +182,9 @@ namespace LackBot.Discord.Services.Implementation
             await Task.CompletedTask;
         }
 
+        /// <summary>
+        /// Disposes of all timers for all scheduled messages.
+        /// </summary>
         public void Dispose()
         {
             timer?.Dispose();

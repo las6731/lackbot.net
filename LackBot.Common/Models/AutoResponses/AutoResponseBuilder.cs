@@ -2,12 +2,29 @@
 
 namespace LackBot.Common.Models.AutoResponses
 {
+    /// <summary>
+    /// Builds a new <see cref="AutoResponse"/> based on the parameters included in an API request. 
+    /// </summary>
     public class AutoResponseBuilder : IBuilder<AutoResponse>
     {
+        /// <summary>
+        /// The phrase to match.
+        /// </summary>
         public string Phrase { get; }
+        
+        /// <summary>
+        /// The response options.
+        /// </summary>
         public IList<string> Responses { get; }
+        
+        /// <summary>
+        /// The type of <see cref="AutoResponse"/> to build. Must be a type defined by <see cref="AutoResponseTypes"/>
+        /// </summary>
         public string Type { get; }
         
+        /// <summary>
+        /// The cron expression to match with (if provided).
+        /// </summary>
         public string TimeSchedule { get; }
 
         public AutoResponseBuilder(string phrase, IList<string> responses, string type = AutoResponseTypes.Naive, string timeSchedule = null)

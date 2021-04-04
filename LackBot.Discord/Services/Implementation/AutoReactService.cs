@@ -48,6 +48,11 @@ namespace LackBot.Discord.Services.Implementation
             }
         }
         
+        /// <summary>
+        /// Query the API for reactions that match the message.
+        /// </summary>
+        /// <param name="message">The message to match.</param>
+        /// <returns>The list of matching reactions.</returns>
         private async Task<IList<AutoReact>> GetMatchingReacts(SocketUserMessage message)
         {
             var configResult = await configProvider.Get();

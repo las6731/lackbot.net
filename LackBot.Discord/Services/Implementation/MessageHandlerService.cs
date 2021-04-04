@@ -51,7 +51,7 @@ namespace LackBot.Discord.Services.Implementation
                     $":sweat_smile: Failed to execute command: {result.ErrorReason}");
             }
             
-            // message was not a command; parse for AutoResponses
+            // message was not a command; parse for AutoResponses and AutoReacts.
             await autoResponseService.HandleMessageAsync(message);
             await autoReactService.HandleMessageAsync(message);
         }

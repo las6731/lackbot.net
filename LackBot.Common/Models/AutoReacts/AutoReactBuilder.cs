@@ -2,11 +2,29 @@
 
 namespace LackBot.Common.Models.AutoReacts
 {
+    /// <summary>
+    /// Builds a new <see cref="AutoReact"/> based on the parameters included in an API request. 
+    /// </summary>
     public class AutoReactBuilder : IBuilder<AutoReact>
     {
+        /// <summary>
+        /// The phrase to match.
+        /// </summary>
         public string Phrase { get; }
+        
+        /// <summary>
+        /// The emoji to react with.
+        /// </summary>
         public string Emoji { get; }
+        
+        /// <summary>
+        /// The type of <see cref="AutoReact"/> to build. Must be a type defined by <see cref="AutoReactTypes"/>
+        /// </summary>
         public string Type { get; }
+        
+        /// <summary>
+        /// The id of an author to match with (if provided).
+        /// </summary>
         public ulong Author { get; }
 
         [JsonConstructor]

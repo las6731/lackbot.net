@@ -6,6 +6,11 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace LackBot.Common.Models.AutoResponses
 {
+    /// <summary>
+    /// A response that will be sent automatically whenever the message contains the defined substring, and the cron
+    /// expression also matches the time that the message was sent (rounded to the minute).
+    /// </summary>
+    /// <remarks><seealso cref="AutoResponseTypes.TimeBased"/></remarks>
     [BsonDiscriminator(AutoResponseTypes.TimeBased)]
     public class TimeBasedAutoResponse : AutoResponse
     {

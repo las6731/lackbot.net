@@ -9,17 +9,32 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace LackBot.Common.Models.ScheduledMessage
 {
+    /// <summary>
+    /// A message that will automatically be sent at a time specified by a cron expression.
+    /// </summary>
     public class ScheduledMessage : ModelBase, IDisposable
     {
+        /// <summary>
+        /// The id of the channel where the message should be sent.
+        /// </summary>
         [BsonElement("channelId")]
         public ulong ChannelId { get; set; }
         
+        /// <summary>
+        /// The cron expression specifying when the message should be sent.
+        /// </summary>
         [BsonElement("timeSchedule")]
         public string TimeSchedule { get; set; }
         
+        /// <summary>
+        /// The options to randomly choose from when sending the message.
+        /// </summary>
         [BsonElement("messages")]
         public IList<string> Messages { get; set; }
 
+        /// <summary>
+        /// The timer.
+        /// </summary>
         private System.Timers.Timer timer;
 
         public ScheduledMessage(ulong channelId, string timeSchedule, IList<string> messages)
@@ -35,6 +50,12 @@ namespace LackBot.Common.Models.ScheduledMessage
             Messages = messages;
         }
 
+        /// <summary>
+        /// Begin the timer for this scheduled message.
+        /// </summary>
+        /// <param name="task">The task to execute when the timer has elapsed.</param>
+        /// <param name="handleOutOfRange">An action to invoke if the next occurence is out of range.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         public async Task BeginTimer(Func<Guid, Task> task, Action<Guid> handleOutOfRange, CancellationToken cancellationToken)
         {
             var cron = CronExpression.Parse(TimeSchedule);
@@ -69,11 +90,18 @@ namespace LackBot.Common.Models.ScheduledMessage
             }
         }
 
+        /// <summary>
+        /// Stop the timer, if it is running.
+        /// </summary>
         public void StopTimer()
         {
             timer?.Stop();
         }
 
+        /// <summary>
+        /// Get the message to send, picking at random from the defined options.
+        /// </summary>
+        /// <returns>The message to send.</returns>
         public string GetMessage()
         {
             var random = new Random();
@@ -83,6 +111,9 @@ namespace LackBot.Common.Models.ScheduledMessage
             return Messages[index];
         }
 
+        /// <summary>
+        /// Dispose of the timer.
+        /// </summary>
         public void Dispose()
         {
             timer?.Dispose();
