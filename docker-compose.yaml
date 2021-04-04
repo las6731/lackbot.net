@@ -11,7 +11,7 @@ services:
             - api
             - db
         environment:
-            - DB_CREDENTIALS=db_credentials_docker.json
+            - DB_CREDENTIALS=db_credentials.json
         restart: unless-stopped
     lackbot_discord:
         build:

@@ -8,9 +8,11 @@ services:
             - db
         volumes:
             - mongo_data:/data/db
+            - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
         environment:
             MONGO_INITDB_ROOT_USERNAME: root
             MONGO_INITDB_ROOT_PASSWORD: password
+        restart: unless-stopped
     mongo-express:
         image: mongo-express
         ports:
@@ -20,6 +22,7 @@ services:
         environment:
             ME_CONFIG_MONGODB_ADMINUSERNAME: root
             ME_CONFIG_MONGODB_ADMINPASSWORD: password
+        restart: unless-stopped
 networks:
     db:
         name: db
