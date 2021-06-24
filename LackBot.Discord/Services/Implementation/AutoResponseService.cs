@@ -1,5 +1,4 @@
 ﻿using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using Discord.WebSocket;
@@ -39,38 +38,11 @@ namespace LackBot.Discord.Services.Implementation
 
             var msg = response.GetResponse(msgDetails);
             
-            msg = ReplaceEmojis(msg);
+            msg = client.ReplaceEmojis(msg);
 
             await message.Channel.SendMessageAsync(msg);
         }
 
-        /// <summary>
-        /// Replace all custom emotes (such as :pog:) with the actual emote, if found by the bot.
-        /// </summary>
-        /// <param name="msg">The message.</param>
-        /// <returns>The message with all found emotes replaced.</returns>
-        private string ReplaceEmojis(string msg)
-        {
-            var matches = Regex.Matches(msg, ":(.+?):");
-
-            foreach (Match match in matches)
-            {
-                var emoteName = match.Captures[0].Value.Trim(':');
-                var emote = client.GetEmote(emoteName);
-
-                if (!emote.IsSuccess) continue;
-
-                msg = msg.Replace(match.Value, emote.Value.ToString());
-            }
-
-            return msg;
-        }
-
-        /// <summary>
-        /// Query the API for the first response that matches the message.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <returns>The first response that matches the message.</returns>
         private async Task<AutoResponse> GetMatchingResponse(MessageDetails message)
         {
             var configResult = await configProvider.Get();

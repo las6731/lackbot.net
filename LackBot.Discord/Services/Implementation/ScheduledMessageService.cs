@@ -102,33 +102,6 @@ namespace LackBot.Discord.Services.Implementation
             return returnedMessages;
         }
 
-        /// <summary>
-        /// Replace all custom emotes (such as :pog:) with the actual emote, if found by the bot.
-        /// </summary>
-        /// <param name="msg">The message.</param>
-        /// <returns>The message with all found emotes replaced.</returns>
-        private string ReplaceEmojis(string msg)
-        {
-            var matches = Regex.Matches(msg, ":(.+?):");
-
-            foreach (Match match in matches)
-            {
-                var emoteName = match.Captures[0].Value.Trim(':');
-                var emote = client.GetEmote(emoteName);
-
-                if (!emote.IsSuccess) continue;
-
-                msg = msg.Replace(match.Value, emote.Value.ToString());
-            }
-
-            return msg;
-        }
-
-        /// <summary>
-        /// Sends the message defined by the scheduled message with the provided id.
-        /// </summary>
-        /// <remarks>Is invoked by the <see cref="ScheduledMessage"/> when its timer has elapsed.</remarks>
-        /// <param name="id">The id of the scheduled message to be sent.</param>
         private async Task SendMessage(Guid id)
         {
             var msg = messages.FirstOrDefault(m => m.Id == id);
@@ -137,7 +110,7 @@ namespace LackBot.Discord.Services.Implementation
 
             var message = msg.GetMessage();
 
-            message = ReplaceEmojis(message);
+            message = client.ReplaceEmojis(message);
 
             if (client.GetChannel(msg.ChannelId) is not IMessageChannel channel) return;
 

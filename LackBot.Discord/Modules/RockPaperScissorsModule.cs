@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -73,17 +72,13 @@ namespace LackBot.Discord.Modules
         private string DetermineResult(int playerChoice, int botChoice)
         {
             if (playerChoice == botChoice) return Result.Draw;
-            switch (playerChoice)
+            return playerChoice switch
             {
-                case 0:
-                    return botChoice == 1 ? Result.Win : Result.Loss;
-                case 1:
-                    return botChoice == 2 ? Result.Win : Result.Loss;
-                case 2:
-                    return botChoice == 0 ? Result.Win : Result.Loss;
-            }
-
-            return "Something broke :pensive:";
+                0 => botChoice == 1 ? Result.Win : Result.Loss,
+                1 => botChoice == 2 ? Result.Win : Result.Loss,
+                2 => botChoice == 0 ? Result.Win : Result.Loss,
+                _ => "Something broke :pensive:"
+            };
         }
     }
 }
