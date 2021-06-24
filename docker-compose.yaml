@@ -4,9 +4,6 @@ services:
         build:
             context: .
             dockerfile: Dockerfile_API
-        ports:
-            - '5000:80'
-            - '5001:443'
         networks:
             - api
             - db
@@ -26,6 +23,8 @@ services:
         build: frontend
         ports:
             - '4200:80'
+        networks:
+            - api
         restart: unless-stopped
 networks:
     api:
