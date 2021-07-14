@@ -19,7 +19,7 @@ namespace LackBot.Discord.Extensions
         {
             var emote = client.Guilds
                 .SelectMany(x => x.Emotes)
-                .FirstOrDefault(x => x.Name.IndexOf(name, StringComparison.OrdinalIgnoreCase) != -1);
+                .FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
             
             return emote is null ? ResultExtended<IEmote>.Failure("Failed to find emote.") : ResultExtended<IEmote>.Success(emote);
         }
@@ -27,6 +27,7 @@ namespace LackBot.Discord.Extensions
         /// <summary>
         /// Replace all custom emotes (such as :pog:) with the actual emote, if found by the bot.
         /// </summary>
+        /// <param name="client">The discord client.</param>
         /// <param name="msg">The message.</param>
         /// <returns>The message with all found emotes replaced.</returns>
         public static string ReplaceEmojis(this DiscordSocketClient client, string msg)
