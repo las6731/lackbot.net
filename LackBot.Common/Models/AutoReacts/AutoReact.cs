@@ -41,7 +41,7 @@ namespace LackBot.Common.Models.AutoReacts
         /// <returns>A bool indicating whether the message matches.</returns>
         public virtual bool Matches(MessageDetails msg)
         {
-            return msg.Content.Contains(Phrase);
+            return msg.Content.Contains(Phrase, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 

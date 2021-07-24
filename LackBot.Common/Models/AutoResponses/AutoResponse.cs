@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using LShort.Common.Models;
@@ -43,7 +43,7 @@ namespace LackBot.Common.Models.AutoResponses
         /// <returns>A bool indicating whether the message matches.</returns>
         public virtual bool Matches(MessageDetails msg)
         {
-            return msg.Content.ToLower().Contains(Phrase);
+            return msg.Content.Contains(Phrase, StringComparison.InvariantCultureIgnoreCase);
         }
 
         /// <summary>
