@@ -51,7 +51,7 @@ export class ResponsesComponent {
     }
 
     addPhrase(): void {
-        const phrase = this.addPhraseForm.value.phrase.trim().toLowerCase();
+        const phrase = this.addPhraseForm.value.phrase.trim();
         const response = this.addPhraseForm.value.response.trim();
 
         let autoResponse = new AutoResponse(phrase, [response]);
