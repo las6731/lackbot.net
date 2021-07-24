@@ -29,7 +29,7 @@ namespace LackBot.Discord.Services.Implementation
             {
                 AuthorId = message.Author.Id,
                 ChannelId = message.Channel.Id,
-                Content = message.Content.ToLower(),
+                Content = message.Content,
                 Timestamp = message.Timestamp
             };
             var response = await GetMatchingResponse(msgDetails);

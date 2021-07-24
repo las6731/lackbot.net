@@ -39,6 +39,7 @@ namespace LackBot.Common.Models.AutoResponses
         {
             return Type switch
             {
+                AutoResponseTypes.Regex => new RegexAutoResponse(Phrase, Responses),
                 AutoResponseTypes.TimeBasedYesNo => new TimeBasedYesNoAutoResponse(Phrase, Responses, TimeSchedule),
                 AutoResponseTypes.TimeBased => new TimeBasedAutoResponse(Phrase, Responses, TimeSchedule),
                 AutoResponseTypes.Strong => new StrongAutoResponse(Phrase, Responses),

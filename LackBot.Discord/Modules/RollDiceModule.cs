@@ -18,7 +18,7 @@ namespace LackBot.Discord.Modules
         /// <summary>
         /// The regex to match dice notation.
         /// </summary>
-        private readonly Regex regex = new Regex("^([0-9]*)d([0-9]+)$");
+        private readonly Regex regex = new("^([0-9]*)d([0-9]+)$");
         
         /// <summary>
         /// The command to roll dice.

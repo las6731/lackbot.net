@@ -21,7 +21,9 @@ export class AutoResponse {
         response.id = apiResponse.id;
 
         let type: string = apiResponse.$type;
-        if (type.includes(AutoResponseType.TimeBasedYesNo)) {
+        if (type.includes(AutoResponseType.Regex)) {
+            response.type = AutoResponseType.Regex;
+        } else if (type.includes(AutoResponseType.TimeBasedYesNo)) {
             response.type = AutoResponseType.TimeBasedYesNo;
             response.timeSchedule = apiResponse.timeSchedule;
         } else if (type.includes(AutoResponseType.TimeBased)) {
@@ -41,5 +43,6 @@ export enum AutoResponseType {
     Naive = "Naive",
     Strong = "Strong",
     TimeBased = "TimeBased",
-    TimeBasedYesNo = "TimeBasedYesNo"
+    TimeBasedYesNo = "TimeBasedYesNo",
+    Regex = "Regex"
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using LShort.Common.Models;
@@ -11,7 +11,7 @@ namespace LackBot.Common.Models.AutoResponses
     /// By default, this matches any message containing <see cref="Phrase"/> as a substring.
     /// </summary>
     /// <remarks><seealso cref="AutoResponseTypes.Naive"/></remarks>
-    [BsonKnownTypes(typeof(StrongAutoResponse), typeof(TimeBasedAutoResponse), typeof(TimeBasedYesNoAutoResponse))]
+    [BsonKnownTypes(typeof(StrongAutoResponse), typeof(TimeBasedAutoResponse), typeof(TimeBasedYesNoAutoResponse), typeof(RegexAutoResponse))]
     [BsonDiscriminator(AutoResponseTypes.Naive, RootClass = true)]
     public class AutoResponse : ModelBase
     {
@@ -83,5 +83,10 @@ namespace LackBot.Common.Models.AutoResponses
         /// also matches a cron expression or not.
         /// </summary>
         public const string TimeBasedYesNo = "TimeBasedYesNo";
+
+        /// <summary>
+        /// Matches based on a regex pattern. Capturing groups are made available to the response in order of appearance.
+        /// </summary>
+        public const string Regex = "Regex";
     }
 }
