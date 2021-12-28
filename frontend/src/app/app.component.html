@@ -1,32 +1,51 @@
-<nav class='navbar navbar-expand-lg mb-3' [ngClass]="{'navbar-dark': !lightMode, 'bg-dark': !lightMode, 'bg-light': lightMode, 'navbar-light': lightMode}">
-  <div class='container' style='justify-content: flex-start;'>
-    <a class='navbar-brand' routerLink=''>{{ title }}</a>
-    <a class='nav-link' routerLink='/responses'>AutoResponses</a>
-    <a class='nav-link' routerLink='/reacts'>AutoReacts</a>
-    <a class='nav-link' routerLink='/messages'>Scheduled Messages</a>
-  </div>
-</nav>
+<tui-theme-night *ngIf='nightMode'></tui-theme-night>
+<tui-root [tuiMode]='nightMode ? "onDark" : "onLight"'>
 
-<div class='container d-flex flex-column justify-content-center'>
-  <h1 class='display-2 text-center'>{{ title }}</h1>
-  <img src='assets/lackbot.png' class='rounded mx-auto d-block mb-5' style='width: 25%; height: 25%; max-width: 256px; max-height: 256px;'>
-  <p>You know how Slackbot lets you add custom responses to post automatically whenever someone says a certain phrase?
-    Well, although Lackbot is intentionally shitty, it lets you do the same thing!</p>
-  <p>Please try to stay within the silly, unhelpful, and occasionally angry vibe that Lackbot is meant to represent.
-    Also, <b>do not</b> add anything that is <i>seriously</i> NSFW. If that starts happening, I'll have to implement
-    authentication so only server admins can access this.</p>
-  <p><i>Please</i> don't make me have to implement authentication.</p>
-</div>
+  <header>
+    <div class='tui-container'>
+      <div class='space-between'>
+        <span class='tui-text_h4 tui-space_right-5'>Lackbot</span>
 
-<div class='container mt-5 p-3' [ngClass]="{'bg-dark': !lightMode, 'bg-light': lightMode}">
-  <router-outlet></router-outlet>
-</div>
-
-<div class='fixed-bottom p-3' [ngClass]="{'bg-dark': !lightMode, 'bg-light': lightMode}">
-  <div class='container'>
-    Open-source on <a href='https://github.com/las6731/lackbot.net'>GitHub</a>. Feel free to contribute!
-    <div class='float-right'>
-      <mat-slide-toggle [(ngModel)]='lightMode' (change)='onLightModeChanged()'>Light Mode</mat-slide-toggle>
+        <tui-tabs class='tui-space_left-4' [(activeItemIndex)]='activeTab'>
+          <button tuiTab (click)='navigate("responses")'>Message Responses</button>
+          <button tuiTab (click)='navigate("reacts")'>Message Reactions</button>
+          <button tuiTab (click)='navigate("messages")'>Scheduled Messages</button>
+        </tui-tabs>
+      </div>
     </div>
+  </header>
+
+  <div class='content'>
+
+    <div class='tui-container'>
+      <tui-expand [expanded]='showIntro'>
+        <a tuiIsland class='intro' [hoverable]='true' (click)='hideIntro()' title='Click to dismiss'>
+          <tui-avatar avatarUrl='assets/lackbot.png' size='xxl'></tui-avatar>
+
+          <p>You know how Slackbot lets you add custom responses to post automatically whenever someone says a certain phrase?
+            Well, although Lackbot is intentionally shitty, it lets you do the same thing!</p>
+
+          <p>Please try to stay within the silly, unhelpful, and occasionally angry vibe that Lackbot is meant to represent.
+            Also, <b>do not</b> add anything that is <i>seriously</i> NSFW. If that starts happening,
+            I'll have to implement authentication so only server admins can access this.</p>
+
+          <p><i>Please</i> don't make me have to implement authentication.</p>
+        </a>
+      </tui-expand>
+
+      <router-outlet></router-outlet>
+    </div>
+
   </div>
-</div>
+
+  <footer>
+    <div class='tui-container space-between'>
+      <span>Open-source on <a href='https://github.com/las6731/lackbot.net'>GitHub</a>. Feel free to contribute!</span>
+      <label>
+        Night Mode
+        <tui-toggle [(ngModel)]='nightMode' (ngModelChange)='setNightMode()'></tui-toggle>
+      </label>
+    </div>
+  </footer>
+
+</tui-root>

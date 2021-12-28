@@ -9,7 +9,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-FROM nginx:1.19.3-alpine
+FROM nginx:alpine
 
 # copy nginx config
 COPY /src/etc/nginx/conf.d/ng.conf /etc/nginx/conf.d/

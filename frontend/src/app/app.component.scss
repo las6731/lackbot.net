@@ -1,0 +1,51 @@
+@import "~@taiga-ui/core/styles/taiga-ui-local";
+@import "../styles.scss";
+
+header {
+    background-color: var(--tui-base-02);
+    width: 100%;
+    @include vertical-padding(12px);
+    @include sticky(top);
+    @include tui-space(bottom, 4);
+}
+
+footer {
+    background-color: var(--tui-base-02);
+    width: 100%;
+    @include vertical-padding(12px);
+    @include sticky(bottom);
+
+    a {
+        color: inherit;
+    }
+}
+
+.tui-container {
+    font: var(--tui-font-text-m);
+}
+
+.content {
+    @include tui-space(vertical, 20);
+}
+
+.intro {
+    @include tui-space(vertical, 8);
+
+    background-color: var(--tui-base-02);
+
+    tui-avatar {
+        display: block;
+        margin: auto;
+        @include tui-space(vertical, 3);
+        width: 25%;
+        height: 25%;
+        max-width: 256px;
+        max-height: 256px;
+    }
+}
+
+.space-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
