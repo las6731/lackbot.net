@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MessagesComponent } from './messages/messages.component';
-import { ReactsComponent } from './reacts/reacts.component';
-import { ResponsesComponent } from './responses/responses.component';
 
 const routes: Routes = [
-  { path: 'responses', component: ResponsesComponent },
-  { path: 'reacts', component: ReactsComponent },
-  { path: 'messages', component: MessagesComponent },
+  { path: 'responses', loadChildren: () => import('./responses/responses.module').then(m => m.ResponsesModule) },
+  { path: 'reacts', loadChildren: () => import('./reacts/reacts.module').then(m => m.ReactsModule) },
+  { path: 'messages', loadChildren: () => import('./messages/messages.module').then(m => m.MessagesModule) },
   { path: '', redirectTo: 'responses', pathMatch: 'full' }
 ];
 

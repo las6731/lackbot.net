@@ -7,16 +7,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TuiAvatarModule, TuiIslandModule, TuiTabsModule, TuiToggleModule } from "@taiga-ui/kit";
 import { FormsModule } from "@angular/forms";
-import { ResponsesComponent } from './responses/responses.component';
-import { ReactsComponent } from './reacts/reacts.component';
-import { MessagesComponent } from './messages/messages.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ResponsesComponent,
-    ReactsComponent,
-    MessagesComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +28,8 @@ import { MessagesComponent } from './messages/messages.component';
     TuiButtonModule,
     TuiIslandModule,
     TuiExpandModule,
-    TuiAvatarModule
+    TuiAvatarModule,
+    FontAwesomeModule
 ],
   providers: [],
   bootstrap: [AppComponent]

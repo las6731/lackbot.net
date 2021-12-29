@@ -1,0 +1,13 @@
+.filters {
+    width: 100%;
+    border-bottom: 1px solid var(--tui-base-04);
+    margin: -16px;
+    margin-bottom: 16px;
+    padding: 16px;
+}
+
+.items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

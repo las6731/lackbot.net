@@ -1,6 +1,5 @@
 <tui-theme-night *ngIf='nightMode'></tui-theme-night>
 <tui-root [tuiMode]='nightMode ? "onDark" : "onLight"'>
-
   <header>
     <div class='tui-container'>
       <div class='space-between'>
@@ -15,27 +14,23 @@
     </div>
   </header>
 
-  <div class='content'>
+  <div class='tui-container content'>
+    <tui-expand [expanded]='showIntro'>
+      <a tuiIsland class='intro' [hoverable]='true' (click)='hideIntro()' title='Click to dismiss'>
+        <tui-avatar avatarUrl='assets/lackbot.png' size='xxl'></tui-avatar>
 
-    <div class='tui-container'>
-      <tui-expand [expanded]='showIntro'>
-        <a tuiIsland class='intro' [hoverable]='true' (click)='hideIntro()' title='Click to dismiss'>
-          <tui-avatar avatarUrl='assets/lackbot.png' size='xxl'></tui-avatar>
+        <p>You know how Slackbot lets you add custom responses to post automatically whenever someone says a certain phrase?
+          Well, although Lackbot is intentionally shitty, it lets you do the same thing!</p>
 
-          <p>You know how Slackbot lets you add custom responses to post automatically whenever someone says a certain phrase?
-            Well, although Lackbot is intentionally shitty, it lets you do the same thing!</p>
+        <p>Please try to stay within the silly, unhelpful, and occasionally angry vibe that Lackbot is meant to represent.
+          Also, <b>do not</b> add anything that is <i>seriously</i> NSFW. If that starts happening,
+          I'll have to implement authentication so only server admins can access this.</p>
 
-          <p>Please try to stay within the silly, unhelpful, and occasionally angry vibe that Lackbot is meant to represent.
-            Also, <b>do not</b> add anything that is <i>seriously</i> NSFW. If that starts happening,
-            I'll have to implement authentication so only server admins can access this.</p>
+        <p><i>Please</i> don't make me have to implement authentication.</p>
+      </a>
+    </tui-expand>
 
-          <p><i>Please</i> don't make me have to implement authentication.</p>
-        </a>
-      </tui-expand>
-
-      <router-outlet></router-outlet>
-    </div>
-
+    <router-outlet></router-outlet>
   </div>
 
   <footer>
@@ -47,5 +42,4 @@
       </label>
     </div>
   </footer>
-
 </tui-root>

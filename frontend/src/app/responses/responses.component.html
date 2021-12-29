@@ -1,1 +1,16 @@
-<p>responses works!</p>
+<app-filterable-container>
+    <div filters class='filters'>
+        <tui-input [(ngModel)]='filter.description' icon='tuiIconFilterLarge' iconAlign='left'>Search</tui-input>
+        <tui-multi-select [(ngModel)]='filter.types' [editable]='false' [expandable]='false'>
+            Types
+            <tui-data-list *tuiDataList>
+                <tui-opt-group tuiMultiSelectGroup>
+                    <button *ngFor='let option of typeOptions' tuiOption [value]='option'>{{typeForDisplay(option)}}</button>
+                </tui-opt-group>
+            </tui-data-list>
+        </tui-multi-select>
+        <button tuiIconButton appearance='secondary' icon='tuiIconClearFormatLarge' (click)='clearFilters()'></button>
+    </div>
+
+    <app-response *ngFor='let response of filteredResponses' [response]='response'></app-response>
+</app-filterable-container>

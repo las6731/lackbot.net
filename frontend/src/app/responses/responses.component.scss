@@ -1,0 +1,20 @@
+.filters {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    tui-input {
+        width: 100%;
+        margin-right: 16px;
+    }
+
+    tui-multi-select {
+        min-width: 256px;
+        max-width: 256px;
+        margin-right: 16px;
+    }
+}
+
+app-response {
+    margin: 8px;
+}
