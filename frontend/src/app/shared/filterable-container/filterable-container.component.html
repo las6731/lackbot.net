@@ -2,7 +2,9 @@
     <div class='filters'>
         <ng-content select='[filters]'></ng-content>
     </div>
-    <div class='items'>
-        <ng-content></ng-content>
-    </div>
+    <tui-loader [showLoader]='!loaded'>
+        <div class='items'>
+            <ng-content></ng-content>
+        </div>
+    </tui-loader>
 </tui-island>

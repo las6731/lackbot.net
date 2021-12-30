@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FilterableContainerComponent } from './filterable-container/filterable-container.component';
 import { TuiIslandModule } from '@taiga-ui/kit';
+import { TuiLoaderModule } from '@taiga-ui/core';
 
 
 
@@ -11,7 +12,8 @@ import { TuiIslandModule } from '@taiga-ui/kit';
   ],
   imports: [
     CommonModule,
-    TuiIslandModule
+    TuiIslandModule,
+    TuiLoaderModule
   ],
   exports: [
     FilterableContainerComponent

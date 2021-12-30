@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-filterable-container',
   templateUrl: './filterable-container.component.html',
   styleUrls: ['./filterable-container.component.scss']
 })
-export class FilterableContainerComponent implements OnInit {
+export class FilterableContainerComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  @Input() loaded: boolean = true;
 
 }

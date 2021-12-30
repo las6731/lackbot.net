@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs';
+import * as util from 'src/util/util';
 import { AutoResponse, AutoResponseType } from './models/autoresponse.model';
 import { ResponsesService } from './services/responses.service';
 
@@ -26,19 +27,8 @@ export class ResponsesComponent implements OnInit {
     
   }
 
-  typeForDisplay(type: AutoResponseType) : string {
-    switch (type) {
-      case AutoResponseType.TimeBasedYesNo:
-        return 'Time-Based Yes/No';
-      case AutoResponseType.TimeBased:
-        return 'Time-Based';
-      case AutoResponseType.Regex:
-        return 'Regex';
-      case AutoResponseType.Strong:
-        return 'Strong';
-      default:
-        return 'Weak';
-    }
+  public typeForDisplay(type: AutoResponseType): string {
+    return util.forDisplay(type);
   }
 
   get filteredResponses(): AutoResponse[] {
@@ -46,6 +36,11 @@ export class ResponsesComponent implements OnInit {
       return (this.filter.description == '' || response.description.includes(this.filter.description)) &&
       (this.filter.types.length == 0 || this.filter.types.includes(response.type))
     });
+  }
+
+  get selectContent(): string {
+    let str = this.filter.types.map(type => util.forDisplay(type)).join(', ');
+    return str.length > 21 ? str.substring(0, 21) + '...' : str;
   }
 
   clearFilters(): void {

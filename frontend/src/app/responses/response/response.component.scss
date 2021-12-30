@@ -2,3 +2,54 @@
     background-color: var(--tui-base-02);
     width: fit-content;
 }
+
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--tui-base-02);
+    padding-left: 16px;
+}
+
+.header-group {
+    display: flex;
+    align-items: center;
+
+    fa-icon {
+        padding: 4px;
+        margin-right: 8px;
+        border-radius: 50%;
+        border: 3px solid var(--tui-text-01);
+    }
+}
+
+form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    text-align: left;
+
+    label {
+        width: 250px;
+        margin-bottom: 8px;
+
+        tui-text-area, tui-select {
+            margin-bottom: 4px;
+        }
+    }
+}
+
+.type {
+    height: fit-content;
+}
+
+.label {
+    color: var(--tui-text-02);
+    display: flex;
+    align-items: center;
+
+    button {
+        height: 32px;
+    }
+}

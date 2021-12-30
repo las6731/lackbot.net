@@ -1,7 +1,7 @@
-<app-filterable-container>
+<app-filterable-container [loaded]='loaded'>
     <div filters class='filters'>
-        <tui-input [(ngModel)]='filter.description' icon='tuiIconFilterLarge' iconAlign='left'>Search</tui-input>
-        <tui-multi-select [(ngModel)]='filter.types' [editable]='false' [expandable]='false'>
+        <tui-input [(ngModel)]='filter.description' icon='tuiIconFilterLarge' iconAlign='left' [tuiTextfieldCleaner]='true'>Search</tui-input>
+        <tui-multi-select [(ngModel)]='filter.types' [editable]='false' [expandable]='false' [valueContent]='selectContent'>
             Types
             <tui-data-list *tuiDataList>
                 <tui-opt-group tuiMultiSelectGroup>
@@ -9,7 +9,7 @@
                 </tui-opt-group>
             </tui-data-list>
         </tui-multi-select>
-        <button tuiIconButton appearance='secondary' icon='tuiIconClearFormatLarge' (click)='clearFilters()'></button>
+        <button tuiIconButton appearance='secondary' icon='tuiIconClearFormatLarge' (click)='clearFilters()' title='Reset filters'></button>
     </div>
 
     <app-response *ngFor='let response of filteredResponses' [response]='response'></app-response>
