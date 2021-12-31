@@ -1,11 +1,11 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { TuiDialogService } from '@taiga-ui/core';
 import { first } from 'rxjs';
 import * as util from 'src/util/util';
-import { DialogComponent } from './dialog/dialog.component';
-import { AutoResponse, AutoResponseType } from './models/autoresponse.model';
-import { ResponseFilter } from './models/responsefilter.model';
-import { ResponsesService } from './services/responses.service';
+import { DialogComponent } from '../dialog/dialog.component';
+import { AutoResponse, AutoResponseType } from '../../models/autoresponse.model';
+import { ResponseFilter } from '../../models/responsefilter.model';
+import { ResponsesService } from '../../services/responses.service';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 
 

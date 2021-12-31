@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ReactsRoutingModule } from './reacts-routing.module';
-import { ReactsComponent } from './reacts.component';
+import { ReactsComponent } from './components/reacts/reacts.component';
 
 
 @NgModule({

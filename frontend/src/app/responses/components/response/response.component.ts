@@ -1,5 +1,5 @@
 import { Component, Injector, Input } from '@angular/core';
-import { AutoResponse, AutoResponseType } from '../models/autoresponse.model';
+import { AutoResponse, AutoResponseType } from '../../models/autoresponse.model';
 import * as util from 'src/util/util';
 import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';

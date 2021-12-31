@@ -1,13 +1,13 @@
 import { Component, Inject, Injector } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faDumbbell, faClock, faCode } from '@fortawesome/free-solid-svg-icons';
-import { AutoResponse, AutoResponseType } from '../models/autoresponse.model';
-import * as util from '../../../util/util';
+import { AutoResponse, AutoResponseType } from '../../models/autoresponse.model';
+import * as util from 'src/util/util';
 import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
 import { POLYMORPHEUS_CONTEXT, PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
-import { ResponsesService } from '../services/responses.service';
+import { ResponsesService } from '../../services/responses.service';
 import { first } from 'rxjs';
-import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-response-dialog',
