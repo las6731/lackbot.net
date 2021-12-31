@@ -1,15 +1,16 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Injector } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faDumbbell, faClock, faCode } from '@fortawesome/free-solid-svg-icons';
 import { AutoResponse, AutoResponseType } from '../models/autoresponse.model';
 import * as util from '../../../util/util';
-import { TuiDialogContext } from '@taiga-ui/core';
-import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus';
+import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
+import { POLYMORPHEUS_CONTEXT, PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { ResponsesService } from '../services/responses.service';
 import { first } from 'rxjs';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
-  selector: 'app-dialog',
+  selector: 'app-response-dialog',
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.scss']
 })
@@ -27,14 +28,14 @@ export class DialogComponent {
   loading = false;
   deleting = false;
 
-  constructor(private fb: FormBuilder, private service: ResponsesService,
+  constructor(private fb: FormBuilder, private service: ResponsesService, private dialogService: TuiDialogService, private injector: Injector,
     @Inject(POLYMORPHEUS_CONTEXT) public context: TuiDialogContext<AutoResponse | null, AutoResponse | null>) {
     if (this.context.data == null) {
       this.isEdit = false;
     }
 
     this.form = fb.group({
-      description: fb.control(this.context.data?.description ?? ''),
+      description: fb.control({ value: this.context.data?.description ?? '', disabled: true}),
       phrase: fb.control(this.context.data?.phrase ?? '', Validators.required),
       type: fb.control(this.context.data?.type ?? AutoResponseType.Naive, Validators.required),
       responses: fb.array(this.context.data?.responses ?? [''], Validators.required),
@@ -104,11 +105,19 @@ export class DialogComponent {
   }
 
   public deleteResponse(): void {
-    this.deleting = true;
 
-    this.service.$responses.pipe(first()).subscribe(() => this.close());
-
-    this.service.deleteAutoResponse(this.context.data?.id!);
+    this.dialogService.open(new PolymorpheusComponent(ConfirmationDialogComponent, this.injector),
+    {
+      label: 'Confirm Deletion',
+      data: 'Are you sure you want to delete this response?',
+      size: 's'
+    }).subscribe(confirm => {
+      if (confirm == true) {
+        this.deleting = true;
+        this.service.$responses.pipe(first()).subscribe(() => this.close());
+        this.service.deleteAutoResponse(this.context.data?.id!);
+      }
+    });
   }
 
   public responseChanged(event: any, i: number): void {

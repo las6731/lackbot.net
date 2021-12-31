@@ -2,18 +2,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FilterableContainerComponent } from './filterable-container/filterable-container.component';
 import { TuiIslandModule } from '@taiga-ui/kit';
-import { TuiLoaderModule } from '@taiga-ui/core';
+import { TuiButtonModule, TuiLoaderModule } from '@taiga-ui/core';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 
 
 @NgModule({
   declarations: [
-    FilterableContainerComponent
+    FilterableContainerComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     CommonModule,
     TuiIslandModule,
-    TuiLoaderModule
+    TuiLoaderModule,
+    TuiButtonModule
   ],
   exports: [
     FilterableContainerComponent
