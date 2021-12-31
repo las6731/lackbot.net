@@ -64,6 +64,14 @@ export class DialogComponent {
     return this.form.controls['type'].value == AutoResponseType.Strong;
   }
 
+  get canSave(): boolean {
+    if (this.form.invalid || this.form.pristine || this.form.disabled) return false;
+    if (this.form.controls['type'].value == AutoResponseType.TimeBasedYesNo) {
+      if (this.responsesControl.length != 2) return false;
+    }
+    return true;
+  }
+
   public edit(): void {
     if (this.form.disabled) this.form.enable();
   }

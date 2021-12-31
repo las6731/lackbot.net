@@ -33,10 +33,12 @@ export class ResponsesComponent {
   }
 
   get filteredResponses(): AutoResponse[] {
-    return this.responses.filter(response => {
-      return (this.filter.description == '' || response.description.includes(this.filter.description)) &&
-      (this.filter.types.length == 0 || this.filter.types.includes(response.type))
-    });
+    return this.responses
+      .filter(response => this.filter.types.length == 0 || this.filter.types.includes(response.type))
+      .filter(response => this.filter.description == '' ||
+        response.description.includes(this.filter.description) ||
+        response.phrase.includes(this.filter.description) ||
+        response.responses.some(res => res.includes(this.filter.description)));
   }
 
   get selectContent(): string {

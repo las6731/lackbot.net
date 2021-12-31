@@ -5,7 +5,7 @@ import { ResponsesRoutingModule } from './responses-routing.module';
 import { ResponsesComponent } from './responses.component';
 import { TuiInputModule, TuiIslandModule, TuiMultiSelectModule, TuiSelectModule, TuiTextAreaModule } from '@taiga-ui/kit';
 import { ResponseComponent } from './response/response.component';
-import { TuiButtonModule, TuiDataListModule, TuiDialogModule, TuiGroupModule, TuiLabelModule, TuiLoaderModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
+import { TuiButtonModule, TuiDataListModule, TuiDialogModule, TuiGroupModule, TuiLabelModule, TuiLoaderModule, TuiTextfieldControllerModule, TuiTooltipModule } from '@taiga-ui/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResponsesService } from './services/responses.service';
 import { SharedModule } from '../shared/shared.module';
@@ -35,6 +35,7 @@ import { DialogComponent } from './dialog/dialog.component';
     TuiTextAreaModule,
     TuiSelectModule,
     TuiLoaderModule,
+    TuiTooltipModule,
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
