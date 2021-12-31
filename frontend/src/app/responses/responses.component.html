@@ -1,6 +1,9 @@
 <app-filterable-container [loaded]='loaded'>
     <div filters class='filters'>
-        <tui-input [(ngModel)]='filter.description' icon='tuiIconFilterLarge' iconAlign='left' [tuiTextfieldCleaner]='true'>Search</tui-input>
+        <div class='add-button'>
+            <button tuiIconButton icon='tuiIconPlusLarge' (click)='openDialog()' title='Add new response'></button>
+        </div>
+        <tui-input [(ngModel)]='filter.description' icon='tuiIconSearchLarge' iconAlign='left' [tuiTextfieldCleaner]='true'>Search</tui-input>
         <tui-multi-select [(ngModel)]='filter.types' [editable]='false' [expandable]='false' [valueContent]='selectContent'>
             Types
             <tui-data-list *tuiDataList>

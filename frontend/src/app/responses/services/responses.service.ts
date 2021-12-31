@@ -31,26 +31,16 @@ export class ResponsesService {
   public addAutoResponse(response: AutoResponse): void {
     this.httpClient.post(`${environment.API_URL}/auto-responses`, response)
         .subscribe(() => this.getResponses());
-}
+  }
 
-public addResponse(id: string, response: string): void {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
-    this.httpClient.post(`${environment.API_URL}/auto-responses/${id}`, `"${response}"`, { headers: headers })
-        .subscribe(() => this.getResponses());
-}
-
-public deleteAutoResponse(id: string): void {
-    this.httpClient.delete(`${environment.API_URL}/auto-responses/${id}`)
-        .subscribe(() => this.getResponses());
-}
-
-public deleteResponse(id: string, responseIndex: number): void {
-    this.httpClient.delete(`${environment.API_URL}/auto-responses/${id}/${responseIndex}`)
-        .subscribe(() => this.getResponses());
-}
-
-public replaceResponse(response: AutoResponse): void {
+  public updateResponse(response: AutoResponse): void {
     this.httpClient.put(`${environment.API_URL}/auto-responses/${response.id}`, response)
         .subscribe(() => this.getResponses());
-}
+  }
+
+  public deleteAutoResponse(id: string): void {
+      this.httpClient.delete(`${environment.API_URL}/auto-responses/${id}`)
+          .subscribe(() => this.getResponses());
+  }
+
 }

@@ -1,30 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
+import { TuiDialogService } from '@taiga-ui/core';
 import { first } from 'rxjs';
 import * as util from 'src/util/util';
+import { DialogComponent } from './dialog/dialog.component';
 import { AutoResponse, AutoResponseType } from './models/autoresponse.model';
+import { ResponseFilter } from './models/responsefilter.model';
 import { ResponsesService } from './services/responses.service';
+import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+
 
 @Component({
   selector: 'app-responses',
   templateUrl: './responses.component.html',
   styleUrls: ['./responses.component.scss']
 })
-export class ResponsesComponent implements OnInit {
+export class ResponsesComponent {
 
   typeOptions = Object.keys(AutoResponseType).map(type => type as AutoResponseType);
   filter: ResponseFilter = new ResponseFilter();
   responses: AutoResponse[];
   loaded = false;
 
-  constructor(private service: ResponsesService) {
+  constructor(private service: ResponsesService, private dialogService: TuiDialogService, private injector: Injector) {
     this.responses = [];
     service.$responses.pipe(first()).subscribe(_ => this.loaded = true);
     service.$responses.subscribe(responses => this.responses = responses);
     this.service.getResponses();
-  }
-
-  ngOnInit(): void {
-    
   }
 
   public typeForDisplay(type: AutoResponseType): string {
@@ -47,9 +48,8 @@ export class ResponsesComponent implements OnInit {
     this.filter = new ResponseFilter();
   }
 
-}
+  public openDialog(): void {
+    this.dialogService.open(new PolymorpheusComponent(DialogComponent, this.injector), { size: 'm' }).subscribe();
+  }
 
-class ResponseFilter {
-  public description: string = '';
-  public types: AutoResponseType[] = [];
 }

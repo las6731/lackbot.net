@@ -8,6 +8,11 @@ html {
     padding-bottom: $amount;
 }
 
+@mixin horizontal-padding($amount) {
+    padding-left: $amount;
+    padding-right: $amount;
+}
+
 @mixin sticky($side) {
     position: fixed;
     z-index: 999;

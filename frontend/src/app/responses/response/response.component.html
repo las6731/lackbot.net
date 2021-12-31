@@ -1,4 +1,4 @@
-<a tuiIsland class='card' [hoverable]='true' (click)='openDialog(content, header)'>
+<a tuiIsland class='card' [hoverable]='true' (click)='openDialog()'>
     <h3 class='tui-island__title'>
         <fa-icon [icon]='strongIcon' size='sm' *ngIf='isStrong' title='Strong Response'></fa-icon>
         <fa-icon [icon]='timeIcon' size='sm' *ngIf='isTimeBased' title='Time-Based Response'></fa-icon>
@@ -21,53 +21,3 @@
         </span>
     </p>
 </a>
-
-<!-- Dialog Templates -->
-
-<ng-template #content>
-    <form [formGroup]='form'>
-        <label tuiLabel label='Description'>
-            <tui-input formControlName='description' [tuiTextfieldLabelOutside]='true'></tui-input>
-        </label>
-        <label tuiLabel [label]='isRegex ? "Pattern" : "Phrase"'>
-            <tui-input formControlName='phrase' [tuiTextfieldLabelOutside]='true'></tui-input>
-        </label>
-        <label tuiLabel label='Type' class='type'>
-            <tui-select formControlName='type' [tuiTextfieldLabelOutside]='true' [valueContent]='typeForDisplay(form.controls["type"].value)'>
-                Types
-                <tui-data-list *tuiDataList>
-                    <tui-opt-group tuiSelectGroup>
-                        <button *ngFor='let option of typeOptions' tuiOption [value]='option'>{{ typeForDisplay(option) }}</button>
-                    </tui-opt-group>
-                </tui-data-list>
-            </tui-select>
-            <tui-input *ngIf='isTimeBased' formControlName='timeSchedule'>Cron Schedule</tui-input>
-        </label>
-        <label tuiLabel [label]='label' formArrayName='responses'>
-            <tui-text-area *ngFor='let res of responsesControl.controls; let i = index' [formControlName]='i'
-                [tuiTextfieldLabelOutside]='true' [tuiTextfieldCleaner]='true' (ngModelChange)='responseChanged(i)' tuiTextfieldSize='m'></tui-text-area>
-        </label>
-        <ng-template #label>
-            <div class='label'>
-                Responses
-                <button tuiIconButton appearance='icon' icon='tuiIconPlus' (click)='addResponse()' *ngIf='form.enabled'></button>
-            </div>
-        </ng-template>
-    </form>
-</ng-template>
-
-<ng-template #header let-observer>
-    <div class='dialog-header'>
-        <div class='header-group'>
-            <fa-icon [icon]='strongIcon' size='lg' *ngIf='isStrong' title='Strong Response'></fa-icon>
-            <fa-icon [icon]='timeIcon' size='lg' *ngIf='isTimeBased' title='Time-Based Response'></fa-icon>
-            <fa-icon [icon]='regexIcon' size='lg' *ngIf='isRegex' title='Regex Response'></fa-icon>
-            <h3>{{ response.description }}</h3>
-        </div>
-        <div class='header-group'>
-            <button tuiIconButton *ngIf='form.disabled' appearance='icon' icon='tuiIconEditLarge' (click)='edit()' title='Edit'></button>
-            <button tuiButton *ngIf='form.enabled' appearance='flat' (click)='save()' size='s'>Save</button>
-            <button tuiIconButton appearance='icon' icon='tuiIconCloseLarge' (click)='observer.complete()' title='Close'></button>
-        </div>
-    </div>
-</ng-template>
