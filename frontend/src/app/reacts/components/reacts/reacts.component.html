@@ -1,1 +1,19 @@
-<p>reacts works!</p>
+<app-filterable-container [loaded]='loaded'>
+    <div filters class='filters'>
+        <div class='add-button'>
+            <button tuiIconButton icon='tuiIconPlusLarge' (click)='openDialog()' title='Add new reaction'></button>
+        </div>
+        <tui-input [(ngModel)]='filter.description' icon='tuiIconSearchLarge' iconAlign='left' [tuiTextfieldCleaner]='true'>Search</tui-input>
+        <tui-multi-select [(ngModel)]='filter.types' [editable]='false' [expandable]='false' [valueContent]='selectContent'>
+            Types
+            <tui-data-list *tuiDataList>
+                <tui-opt-group tuiMultiSelectGroup>
+                    <button *ngFor='let option of typeOptions' tuiOption [value]='option'>{{typeForDisplay(option)}}</button>
+                </tui-opt-group>
+            </tui-data-list>
+        </tui-multi-select>
+        <button tuiIconButton appearance='secondary' icon='tuiIconClearFormatLarge' (click)='clearFilters()' title='Reset filters'></button>
+    </div>
+
+    <app-react *ngFor='let react of filteredReactions' [react]='react'></app-react>
+</app-filterable-container>

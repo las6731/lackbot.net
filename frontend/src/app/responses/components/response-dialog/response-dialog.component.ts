@@ -1,4 +1,4 @@
-import { Component, Inject, Injector } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Injector } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faDumbbell, faClock, faCode } from '@fortawesome/free-solid-svg-icons';
 import { AutoResponse, AutoResponseType } from '../../models/autoresponse.model';
@@ -11,10 +11,10 @@ import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmat
 
 @Component({
   selector: 'app-response-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss']
+  templateUrl: './response-dialog.component.html',
+  styleUrls: ['./response-dialog.component.scss']
 })
-export class DialogComponent {
+export class ResponseDialogComponent {
 
   strongIcon = faDumbbell;
   timeIcon = faClock;
@@ -28,7 +28,8 @@ export class DialogComponent {
   loading = false;
   deleting = false;
 
-  constructor(private fb: FormBuilder, private service: ResponsesService, private dialogService: TuiDialogService, private injector: Injector,
+  constructor(private fb: FormBuilder, private service: ResponsesService,
+    private dialogService: TuiDialogService, private injector: Injector, private changeDetector: ChangeDetectorRef,
     @Inject(POLYMORPHEUS_CONTEXT) public context: TuiDialogContext<AutoResponse | null, AutoResponse | null>) {
     if (this.context.data == null) {
       this.isEdit = false;
@@ -46,7 +47,7 @@ export class DialogComponent {
   }
 
   public typeForDisplay(type: AutoResponseType): string {
-    return util.forDisplay(type);
+    return util.responseTypeForDisplay(type);
   }
 
   get responsesControl(): FormArray {
@@ -80,14 +81,14 @@ export class DialogComponent {
   public save(): void {
     this.form.disable();
     this.loading = true;
-    
-    let response = this.form.value as AutoResponse;
 
     this.service.$responses.pipe(first()).subscribe(() => {
       this.loading = false;
       if (!this.isEdit) this.context.completeWith(null);
+      this.changeDetector.detectChanges();
     });
 
+    let response = this.form.value as AutoResponse;
     if (this.isEdit) {
       response.id = this.context.data?.id;
       this.service.updateResponse(response);

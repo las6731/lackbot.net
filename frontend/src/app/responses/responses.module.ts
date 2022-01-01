@@ -11,14 +11,14 @@ import { ResponsesService } from './services/responses.service';
 import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { DialogComponent } from './components/dialog/dialog.component';
+import { ResponseDialogComponent } from './components/response-dialog/response-dialog.component';
 
 
 @NgModule({
   declarations: [
     ResponsesComponent,
     ResponseComponent,
-    DialogComponent
+    ResponseDialogComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +31,6 @@ import { DialogComponent } from './components/dialog/dialog.component';
     TuiDialogModule,
     TuiLabelModule,
     TuiTextfieldControllerModule,
-    TuiGroupModule,
     TuiTextAreaModule,
     TuiSelectModule,
     TuiLoaderModule,

@@ -1,0 +1,27 @@
+.filters {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    tui-input {
+        width: 100%;
+        margin-right: 16px;
+    }
+
+    tui-multi-select {
+        min-width: 256px;
+        max-width: 256px;
+        margin-right: 16px;
+    }
+
+    .add-button {
+        border-right: 1px solid var(--tui-base-04);
+        margin: -16px;
+        margin-right: 16px;
+        padding: 16px;
+    }
+}
+
+app-react {
+    margin: 8px;
+}

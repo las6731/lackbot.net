@@ -1,0 +1,56 @@
+<div class='dialog-header'>
+    <div class='header-group'>
+        <fa-icon class='strong-icon' [icon]='strongIcon' size='lg' *ngIf='isStrong' title='Strong Reaction'></fa-icon>
+        <fa-icon class='author-icon' [icon]='authorIcon' size='lg' *ngIf='isAuthor' title='Author-Based Reaction'></fa-icon>
+        <h3>{{ context.data != null ? context.data.description : 'New Reaction' }}</h3>
+    </div>
+    <div class='header-group'>
+        <button tuiIconButton *ngIf='form.disabled && isEdit && !(loading || deleting)' appearance='icon' icon='tuiIconEditLarge' (click)='edit()' title='Edit reaction'></button>
+        <tui-loader *ngIf='form.enabled || loading' [showLoader]='loading'>
+            <button tuiButton [disabled]='!canSave' (click)='save()' size='s'>Save</button>
+        </tui-loader>
+        <tui-loader *ngIf='isEdit && form.disabled && !loading' [showLoader]='deleting'>
+            <button tuiIconButton [disabled]='deleting' appearance='icon' icon='tuiIconTrashLarge' (click)='deleteReact()' title='Delete reaction'></button>
+        </tui-loader>
+        <button tuiIconButton appearance='icon' icon='tuiIconCloseLarge' (click)='close()' title='Close'></button>
+    </div>
+</div>
+<form [formGroup]='form'>
+    <label tuiLabel label='Description - Coming Soon'>
+        <tui-input formControlName='description' [tuiTextfieldLabelOutside]='true'></tui-input>
+    </label>
+    <label tuiLabel label='Phrase'>
+        <tui-input [required]='!isAuthor' formControlName='phrase' [tuiTextfieldLabelOutside]='true'></tui-input>
+    </label>
+    <label tuiLabel [label]='typeLabel'>
+        <tui-select formControlName='type' [tuiTextfieldLabelOutside]='true' (ngModelChange)='typeChanged()' [valueContent]='typeForDisplay(form.controls["type"].value)'>
+            Types
+            <tui-data-list *tuiDataList>
+                <tui-opt-group tuiSelectGroup>
+                    <button *ngFor='let option of typeOptions' tuiOption [value]='option'>{{ typeForDisplay(option) }}</button>
+                </tui-opt-group>
+            </tui-data-list>
+        </tui-select>
+        <tui-input *ngIf='isAuthor' [required]='isAuthor' formControlName='author'>Author ID</tui-input>
+    </label>
+    <ng-template #typeLabel>
+        <div class='label'>
+            Type
+            <tui-tooltip direction='top-right' *ngIf='isAuthor' [content]='authorTooltip'></tui-tooltip>
+            <ng-template #authorTooltip>
+                <div>Author-based reactions match messages sent by a specific user.</div>
+                <div>To get a user's ID, enable developer mode in Discord, right click their name, then choose 'Copy ID'</div>
+            </ng-template>
+            <tui-tooltip direction='top-right' *ngIf='isStrong' [content]='strongTooltip'></tui-tooltip>
+            <ng-template #strongTooltip>
+                <div>Strong reacts match only whole words.</div>
+                <div>Ex: phrase: 'test' -> 'the test' matches, 'testing' doesn't</div>
+            </ng-template>
+            <tui-tooltip direction='top-right' *ngIf='!(isAuthor || isStrong)' [content]='weakTooltip'></tui-tooltip>
+            <ng-template #weakTooltip>Weak reactions match any message that contains the activation phrase.</ng-template>
+        </div>
+    </ng-template>
+    <label tuiLabel label='Emoji' class='emoji'>
+        <tui-input formControlName='emoji' [tuiTextfieldLabelOutside]='true'></tui-input>
+    </label>
+</form>

@@ -2,12 +2,11 @@ import { Component, Injector } from '@angular/core';
 import { TuiDialogService } from '@taiga-ui/core';
 import { first } from 'rxjs';
 import * as util from 'src/util/util';
-import { DialogComponent } from '../dialog/dialog.component';
+import { ResponseDialogComponent } from '../response-dialog/response-dialog.component';
 import { AutoResponse, AutoResponseType } from '../../models/autoresponse.model';
 import { ResponseFilter } from '../../models/responsefilter.model';
 import { ResponsesService } from '../../services/responses.service';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
-
 
 @Component({
   selector: 'app-responses',
@@ -29,7 +28,7 @@ export class ResponsesComponent {
   }
 
   public typeForDisplay(type: AutoResponseType): string {
-    return util.forDisplay(type);
+    return util.responseTypeForDisplay(type);
   }
 
   get filteredResponses(): AutoResponse[] {
@@ -42,7 +41,7 @@ export class ResponsesComponent {
   }
 
   get selectContent(): string {
-    let str = this.filter.types.map(type => util.forDisplay(type)).join(', ');
+    let str = this.filter.types.map(type => util.responseTypeForDisplay(type)).join(', ');
     return str.length > 21 ? str.substring(0, 21) + '...' : str;
   }
 
@@ -51,7 +50,7 @@ export class ResponsesComponent {
   }
 
   public openDialog(): void {
-    this.dialogService.open(new PolymorpheusComponent(DialogComponent, this.injector), { size: 'm' }).subscribe();
+    this.dialogService.open(new PolymorpheusComponent(ResponseDialogComponent, this.injector), { size: 'm' }).subscribe();
   }
 
 }

@@ -4,7 +4,7 @@ import * as util from 'src/util/util';
 import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { faClock, faCode, faDumbbell } from '@fortawesome/free-solid-svg-icons';
-import { DialogComponent } from '../dialog/dialog.component';
+import { ResponseDialogComponent } from '../response-dialog/response-dialog.component';
 
 @Component({
   selector: 'app-response',
@@ -22,7 +22,7 @@ export class ResponseComponent {
   constructor(private dialogService: TuiDialogService, private injector: Injector) { }
 
   get typeDisplay(): string {
-    return util.forDisplay(this.response.type);
+    return util.responseTypeForDisplay(this.response.type);
   }
 
   get responseDisplay(): string {
@@ -46,11 +46,11 @@ export class ResponseComponent {
   }
 
   public typeForDisplay(type: AutoResponseType): string {
-    return util.forDisplay(type);
+    return util.responseTypeForDisplay(type);
   }
 
   public openDialog(): void {
-    this.dialogService.open(new PolymorpheusComponent(DialogComponent, this.injector), {
+    this.dialogService.open(new PolymorpheusComponent(ResponseDialogComponent, this.injector), {
       size: 'm',
       data: this.response
     }).subscribe();

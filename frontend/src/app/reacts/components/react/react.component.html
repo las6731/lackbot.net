@@ -1,0 +1,14 @@
+<a tuiIsland class='card' [hoverable]='true' (click)='openDialog()'>
+    <h3 class='tui-island__title'>
+        <fa-icon [icon]='strongIcon' size='sm' *ngIf='isStrong' title='Strong Reaction'></fa-icon>
+        <fa-icon [icon]='authorIcon' size='sm' *ngIf='isAuthor' title='Author-Based Reaction'></fa-icon>
+        {{ react.description }}
+    </h3>
+    <p class='tui-island__paragraph'>
+        <span *ngIf='!isAuthor'>
+            <b>Phrase:</b> {{ react.phrase }} <br>
+        </span>
+        <b>Type:</b> {{ typeDisplay }} <br>
+        <b>Reaction:</b> {{ react.emoji }}
+    </p>
+</a>

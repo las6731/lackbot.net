@@ -1,8 +1,8 @@
 <div class='dialog-header'>
     <div class='header-group'>
-        <fa-icon [icon]='strongIcon' size='lg' *ngIf='isStrong' title='Strong Response'></fa-icon>
-        <fa-icon [icon]='timeIcon' size='lg' *ngIf='isTimeBased' title='Time-Based Response'></fa-icon>
-        <fa-icon [icon]='regexIcon' size='lg' *ngIf='isRegex' title='Regex Response'></fa-icon>
+        <fa-icon class='strong-icon' [icon]='strongIcon' size='lg' *ngIf='isStrong' title='Strong Response'></fa-icon>
+        <fa-icon class='time-icon' [icon]='timeIcon' size='lg' *ngIf='isTimeBased' title='Time-Based Response'></fa-icon>
+        <fa-icon class='regex-icon' [icon]='regexIcon' size='lg' *ngIf='isRegex' title='Regex Response'></fa-icon>
         <h3>{{ context.data != null ? context.data.description : 'New Response' }}</h3>
     </div>
     <div class='header-group'>
