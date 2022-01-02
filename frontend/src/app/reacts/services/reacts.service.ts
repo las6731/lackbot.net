@@ -17,8 +17,8 @@ export class ReactsService {
 
     public getReacts(): void {
         this.httpClient.get(`${environment.API_URL}/auto-reacts`).subscribe((res: any) => {
-          let reacts = res as any[];  
-          let results: AutoReact[] = [];
+            let reacts = res as any[];  
+            let results: AutoReact[] = [];
 
             reacts.forEach(react => {
                 results.push(AutoReact.Parse(react));

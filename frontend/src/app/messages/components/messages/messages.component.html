@@ -1,1 +1,13 @@
-<p>messages works!</p>
+<app-filterable-container [loaded]='loaded'>
+    <div filters class='filters'>
+        <div class='add-button'>
+            <button tuiIconButton icon='tuiIconPlusLarge' (click)='openDialog()' title='Add new message'></button>
+        </div>
+        <tui-input class='description-input' [(ngModel)]='filter.description' icon='tuiIconSearchLarge' iconAlign='left' [tuiTextfieldCleaner]='true'>Search</tui-input>
+        <tui-input [(ngModel)]='filter.schedule' [tuiTextfieldCleaner]='true'>Cron Schedule</tui-input>
+        <tui-input [(ngModel)]='filter.channel' [tuiTextfieldCleaner]='true'>Channel ID</tui-input>
+        <button tuiIconButton appearance='secondary' icon='tuiIconClearFormatLarge' (click)='clearFilters()' title='Reset filters'></button>
+    </div>
+
+    <app-message *ngFor='let msg of filteredMessages' [message]='msg'></app-message>
+</app-filterable-container>

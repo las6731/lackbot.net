@@ -1,0 +1,26 @@
+.filters {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    tui-input {
+        width: 256px;
+        margin-right: 16px;
+    }
+
+    .description-input {
+        width: 100% !important;
+        margin-right: 16px;
+    }
+
+    .add-button {
+        border-right: 1px solid var(--tui-base-04);
+        margin: -16px;
+        margin-right: 16px;
+        padding: 16px;
+    }
+}
+
+app-message {
+    margin: 8px;
+}

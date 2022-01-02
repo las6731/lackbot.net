@@ -1,0 +1,8 @@
+<a tuiIsland class='card' [hoverable]='true' (click)='openDialog()'>
+    <h3 class='tui-island__title'>{{ message.description }}</h3>
+    <p class='tui-island__paragraph'>
+        <b>Schedule:</b> {{ message.timeSchedule }} <br>
+        <b>Channel:</b> {{ message.channelId }} <br>
+        <b>Message:</b> {{ messageDisplay }}
+    </p>
+</a>

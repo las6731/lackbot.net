@@ -21,7 +21,7 @@ export class AutoReact {
         let type: string = apiResponse.$type;
         if (type.includes(AutoReactType.Author)) {
             react.type = AutoReactType.Author;
-            react.author = BigInt(apiResponse.author);
+            react.author = apiResponse.author;
         } else if (type.includes(AutoReactType.Strong)) {
             react.type = AutoReactType.Strong;
         } else {

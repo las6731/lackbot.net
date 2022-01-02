@@ -1,0 +1,48 @@
+<div class='dialog-header'>
+    <div class='header-group'>
+        <h3>{{ context.data != null ? context.data.description : 'New Message' }}</h3>
+    </div>
+    <div class='header-group'>
+        <button tuiIconButton *ngIf='form.disabled && isEdit && !(loading || deleting)' appearance='icon' icon='tuiIconEditLarge' (click)='edit()' title='Edit message'></button>
+        <tui-loader *ngIf='form.enabled || loading' [showLoader]='loading'>
+            <button tuiButton [disabled]='!canSave' (click)='save()' size='s'>Save</button>
+        </tui-loader>
+        <tui-loader *ngIf='isEdit && form.disabled && !loading' [showLoader]='deleting'>
+            <button tuiIconButton [disabled]='deleting' appearance='icon' icon='tuiIconTrashLarge' (click)='deleteMessage()' title='Delete message'></button>
+        </tui-loader>
+        <button tuiIconButton appearance='icon' icon='tuiIconCloseLarge' (click)='close()' title='Close'></button>
+    </div>
+</div>
+<form [formGroup]='form'>
+    <label tuiLabel label='Description - Coming Soon'>
+        <tui-input formControlName='description' [tuiTextfieldLabelOutside]='true'></tui-input>
+    </label>
+    <label tuiLabel label='Channel ID'>
+        <tui-input required formControlName='channelId' [tuiTextfieldLabelOutside]='true'></tui-input>
+    </label>
+    <label tuiLabel [label]='timeLabel' class='schedule'>
+        <tui-input formControlName='timeSchedule' [tuiTextfieldLabelOutside]='true'></tui-input>
+    </label>
+    <ng-template #timeLabel>
+        <div class='label'>
+            Cron Schedule
+            <tui-tooltip direction='top-right' [content]='timeTooltip'></tui-tooltip>
+            <ng-template #timeTooltip>
+                <div>
+                    Schedule messages use <a href='https://en.wikipedia.org/wiki/Cron'>cron expressions</a> to represent when a message should be sent.
+                    Tools such as <a href='https://crontab.guru/'>Crontab.Guru</a> are useful for understanding how these work.
+                </div>
+            </ng-template>
+        </div>
+    </ng-template>
+    <label tuiLabel [label]='messageLabel' formArrayName='messages'>
+        <tui-text-area required *ngFor='let res of messagesControl.controls; let i = index' [formControlName]='i'
+            [tuiTextfieldLabelOutside]='true' [tuiTextfieldCleaner]='true' (ngModelChange)='messageChanged($event, i)' tuiTextfieldSize='m'></tui-text-area>
+    </label>
+    <ng-template #messageLabel>
+        <div class='label'>
+            Messages
+            <button tuiIconButton appearance='icon' icon='tuiIconPlus' (click)='addMessage()' *ngIf='form.enabled'></button>
+        </div>
+    </ng-template>
+</form>
