@@ -18,7 +18,7 @@ export class AppComponent {
       .subscribe(e => this.setActiveTab((e as NavigationEnd).url));
     
     this.nightMode = window.localStorage.getItem('lightMode') == null;
-    //this.showIntro = window.localStorage.getItem('showIntro') == null;
+    this.showIntro = window.localStorage.getItem('showIntro') == null;
   }
 
   public setActiveTab(url: string) {

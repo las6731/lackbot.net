@@ -2,7 +2,6 @@ export class JsonParser {
     parse(text: string): any {
         text = text.replace(regex, s => `"${s}"`); // convert bigints to strings before parsing, so they don't get corrupted
         if (text == '') return null; // it doesn't like empty strings for some reason
-        console.log(text);
         return JSON.parse(text, customReviver);
     }
 }
